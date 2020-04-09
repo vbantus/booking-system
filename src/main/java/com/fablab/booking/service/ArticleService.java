@@ -1,16 +1,18 @@
 package com.fablab.booking.service;
 
 import com.fablab.booking.domain.Article;
-import com.fablab.booking.dto.ArticleDto;
+import com.fablab.booking.dto.RqCreateArticleDto;
+import com.fablab.booking.dto.RqUpdateArticleDto;
+import com.fablab.booking.dto.RsArticleDto;
 
 public interface ArticleService {
     Article findById(Long id);
 
-    ArticleDto findDtoById(Long id);
+    RsArticleDto findDtoById(Long id);
 
-    ArticleDto save(ArticleDto articleDto);
+    RsArticleDto save(RqCreateArticleDto rqCreateArticleDto);
 
-    ArticleDto update (ArticleDto articleDto);
+    RsArticleDto update (RqUpdateArticleDto rqUpdateArticleDto, Long id);
 
     void deleteById(Long id);
 }

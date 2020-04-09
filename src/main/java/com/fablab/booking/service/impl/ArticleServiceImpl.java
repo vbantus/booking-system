@@ -1,7 +1,9 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Article;
-import com.fablab.booking.dto.ArticleDto;
+import com.fablab.booking.dto.RqCreateArticleDto;
+import com.fablab.booking.dto.RqUpdateArticleDto;
+import com.fablab.booking.dto.RsArticleDto;
 import com.fablab.booking.mapper.ArticleMapper;
 import com.fablab.booking.repository.ArticleRepository;
 import com.fablab.booking.service.ArticleService;
@@ -24,22 +26,22 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDto findDtoById(Long id) {
+    public RsArticleDto findDtoById(Long id) {
         Article article = articleRepository.findById(id).orElse(null);
-        return ArticleMapper.INSTANCE.articleToArticleDto(article);
+        return ArticleMapper.INSTANCE.articleToRsArticleDto(article);
     }
 
     @Override
-    public ArticleDto save(ArticleDto articleDto) {
-        Article article = ArticleMapper.INSTANCE.articleDtoToArticle(articleDto);
-        return ArticleMapper.INSTANCE.articleToArticleDto(articleRepository.save(article));
+    public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto) {
+        Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
+        return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 
     @Override
-    public ArticleDto update(ArticleDto articleDto) {
-        Article article = articleRepository.findById(articleDto.getId()).orElse(null);
-        ArticleMapper.INSTANCE.updateArticleFromArticleDto(articleDto, article);
-        return ArticleMapper.INSTANCE.articleToArticleDto(articleRepository.save(article));
+    public RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id) {
+        Article article = articleRepository.findById(id).orElse(null);
+        ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
+        return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 
     @Override

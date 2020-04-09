@@ -1,14 +1,15 @@
 package com.fablab.booking.service;
 
-import com.fablab.booking.domain.Comment;
-import com.fablab.booking.dto.CommentDto;
+import com.fablab.booking.dto.RqCreateCommentDto;
+import com.fablab.booking.dto.RqUpdateCommentDto;
+import com.fablab.booking.dto.RsCommentDto;
 
 public interface CommentService {
-    CommentDto findDtoById(Long id);
+    RsCommentDto findDtoById(Long id);
 
-    CommentDto save(CommentDto commentDto);
+    RsCommentDto save(RqCreateCommentDto rqCreateCommentDto);
 
-    CommentDto update(CommentDto commentDto);
+    RsCommentDto update(RqUpdateCommentDto rqUpdateCommentDto, Long id);
 
     void deleteById(Long id);
 }

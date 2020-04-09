@@ -2,7 +2,9 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Article;
 import com.fablab.booking.domain.Comment;
-import com.fablab.booking.dto.CommentDto;
+import com.fablab.booking.dto.RqCreateCommentDto;
+import com.fablab.booking.dto.RqUpdateCommentDto;
+import com.fablab.booking.dto.RsCommentDto;
 import com.fablab.booking.mapper.CommentMapper;
 import com.fablab.booking.repository.CommentRepository;
 import com.fablab.booking.service.ArticleService;
@@ -23,25 +25,25 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto findDtoById(Long id) {
+    public RsCommentDto findDtoById(Long id) {
         // TODO ad exception for comment not found
         Comment comment = commentRepository.findById(id).orElse(null);
-        return CommentMapper.INSTANCE.commentToCommentDto(comment);
+        return CommentMapper.INSTANCE.commentToRsCommentDto(comment);
     }
 
     @Override
-    public CommentDto save(CommentDto commentDto) {
-        Comment comment = CommentMapper.INSTANCE.commentDtoToComment(commentDto);
-        Article article = articleService.findById(commentDto.getArticleId());
+    public RsCommentDto save(RqCreateCommentDto rqCreateCommentDto) {
+        Comment comment = CommentMapper.INSTANCE.rqCreateCommentDtoToComment(rqCreateCommentDto);
+        Article article = articleService.findById(rqCreateCommentDto.getArticleId());
         article.addComment(comment);
-        return CommentMapper.INSTANCE.commentToCommentDto(commentRepository.save(comment));
+        return CommentMapper.INSTANCE.commentToRsCommentDto(commentRepository.save(comment));
     }
 
     @Override
-    public CommentDto update(CommentDto commentDto) {
-        Comment comment = commentRepository.findById(commentDto.getId()).orElse(null);
-        CommentMapper.INSTANCE.updateCommentFromCommentDto(commentDto, comment);
-        return CommentMapper.INSTANCE.commentToCommentDto(commentRepository.save(comment));
+    public RsCommentDto update(RqUpdateCommentDto rqUpdateCommentDto, Long id) {
+        Comment comment = commentRepository.findById(id).orElse(null);
+        CommentMapper.INSTANCE.updateCommentFromRqUpdateCommentDto(rqUpdateCommentDto, comment);
+        return CommentMapper.INSTANCE.commentToRsCommentDto(commentRepository.save(comment));
     }
 
     @Override
