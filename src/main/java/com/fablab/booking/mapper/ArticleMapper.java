@@ -1,23 +1,23 @@
 package com.fablab.booking.mapper;
 
 import com.fablab.booking.domain.Article;
-import com.fablab.booking.dto.ArticleDto;
+import com.fablab.booking.dto.RqCreateArticleDto;
+import com.fablab.booking.dto.RqUpdateArticleDto;
+import com.fablab.booking.dto.RsArticleDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = {CommentMapper.class}, builder = @Builder(disableBuilder = true))
 public interface ArticleMapper {
+
     ArticleMapper INSTANCE = Mappers.getMapper(ArticleMapper.class);
 
+    Article rqCreateArticleDtoToArticle(RqCreateArticleDto rqCreateArticleDto);
+
+    Article rqUpdateArticleDtoToArticle(RqUpdateArticleDto rqUpdateArticleDto);
+
     @Mapping(source = "comments", target = "commentDtos")
-    ArticleDto articleToArticleDto(Article article);
+    RsArticleDto articleToRsArticleDto(Article article);
 
-    @InheritInverseConfiguration
-    Article articleDtoToArticle(ArticleDto articleDto);
-
-
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createDate", ignore = true)
-    @Mapping(target = "updateDate", ignore = true)
-    void updateArticleFromArticleDto(ArticleDto articleDto, @MappingTarget Article article);
+    void updateArticleFromRqUpdateArticleDto(RqUpdateArticleDto rqUpdateArticleDto, @MappingTarget Article article);
 }
