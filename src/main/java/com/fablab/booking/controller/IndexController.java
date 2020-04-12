@@ -30,12 +30,6 @@ public class IndexController {
 
     @GetMapping
     public ResponseEntity<String> hi() {
-        UserAuthority userAuthority = UserAuthority.builder()
-                .role(UserRole.ROLE_USER)
-                .bookingUser(userRepository.findByUsername("vasea").get())
-                .build();
-
-        userAuthorityRepository.save(userAuthority);
         return ResponseEntity.status(HttpStatus.OK).body("hi there");
     }
 }

@@ -17,6 +17,7 @@ public interface ArticleMapper {
     Article rqUpdateArticleDtoToArticle(RqUpdateArticleDto rqUpdateArticleDto);
 
     @Mapping(source = "comments", target = "commentDtos")
+    @Mapping(source = "user.id", target = "userId")
     RsArticleDto articleToRsArticleDto(Article article);
 
     void updateArticleFromRqUpdateArticleDto(RqUpdateArticleDto rqUpdateArticleDto, @MappingTarget Article article);

@@ -23,4 +23,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return UserMapper.INSTANCE.userToRsUserDto(userRepository.save(user));
     }
+
+    @Override
+    public BookingUser findById(Long id) {
+        return userRepository.findById(id).get();
+    }
+
+    @Override
+    public BookingUser findByUsername(String username) {
+        return userRepository.findByUsername(username).get();
+    }
 }
