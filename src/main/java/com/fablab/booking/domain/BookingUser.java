@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Builder
 @Entity
 @Table(name = "users")
-public class User extends AbstractEntity{
+public class BookingUser extends AbstractEntity{
     @Column(unique = true, nullable = false)
     private String username;
     private String password;

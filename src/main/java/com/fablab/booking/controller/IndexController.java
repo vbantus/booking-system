@@ -1,5 +1,9 @@
 package com.fablab.booking.controller;
 
+import com.fablab.booking.domain.UserAuthority;
+import com.fablab.booking.domain.util.UserRole;
+import com.fablab.booking.repository.UserAuthorityRepository;
+import com.fablab.booking.repository.BookingUserRepository;
 import com.fablab.booking.service.ArticleService;
 import com.fablab.booking.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +24,18 @@ public class IndexController {
 
     private final ArticleService articleService;
     private final CommentService commentService;
+    private final BookingUserRepository bookingUserRepository;
+    private final UserAuthorityRepository userAuthorityRepository;
     private final EntityManager entityManager;
 
     @GetMapping
     public ResponseEntity<String> hi() {
+        UserAuthority userAuthority = UserAuthority.builder()
+                .role(UserRole.ROLE_USER)
+                .bookingUser(bookingUserRepository.findByUsername("vasea").get())
+                .build();
+
+        userAuthorityRepository.save(userAuthority);
         return ResponseEntity.status(HttpStatus.OK).body("hi there");
     }
 }

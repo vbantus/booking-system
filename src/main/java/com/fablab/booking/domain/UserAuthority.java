@@ -29,5 +29,5 @@ public class UserAuthority extends AbstractEntity{
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "user_id")
-    private User user;
+    private BookingUser bookingUser;
 }
