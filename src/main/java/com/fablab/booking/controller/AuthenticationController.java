@@ -1,7 +1,9 @@
 package com.fablab.booking.controller;
 
 import com.fablab.booking.domain.BookingUser;
+import com.fablab.booking.dto.JwtResponseDto;
 import com.fablab.booking.repository.BookingUserRepository;
+import com.fablab.booking.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/booking/api/auth")
 public class AuthenticationController {
+
+    private final AuthenticationService authenticationService;
     private final BookingUserRepository bookingUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -25,8 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<BookingUser> authenticateUser(@RequestBody BookingUser bookingUser){
-        bookingUser.setPassword(bCryptPasswordEncoder.encode(bookingUser.getPassword()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookingUserRepository.save(bookingUser));
+    public ResponseEntity<JwtResponseDto> authenticateUser(@RequestBody BookingUser bookingUser){
+        return  ResponseEntity.ok(authenticationService.authenticate(bookingUser.getUsername(), bookingUser.getPassword()));
     }
 }
