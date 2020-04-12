@@ -12,6 +12,9 @@ import com.fablab.booking.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -29,6 +32,13 @@ public class CommentServiceImpl implements CommentService {
         // TODO ad exception for comment not found
         Comment comment = commentRepository.findById(id).orElse(null);
         return CommentMapper.INSTANCE.commentToRsCommentDto(comment);
+    }
+
+    @Override
+    public List<RsCommentDto> findAllDtoByArticleId(Long id) {
+        return commentRepository.findAllByArticleId(id).stream()
+                .map(CommentMapper.INSTANCE::commentToRsCommentDto)
+                .collect(Collectors.toList());
     }
 
     @Override
