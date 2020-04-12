@@ -35,9 +35,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/swagger-ui.html/**").permitAll()
                 .antMatchers("/booking/api/auth/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()//.authenticated()
                 .and().exceptionHandling()
-                .and().formLogin()
+                //.and().formLogin()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     }

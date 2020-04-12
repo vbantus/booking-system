@@ -3,7 +3,7 @@ package com.fablab.booking.service.impl;
 import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.domain.UserAuthority;
 import com.fablab.booking.domain.util.UserPrinciple;
-import com.fablab.booking.repository.BookingUserRepository;
+import com.fablab.booking.repository.UserRepository;
 import com.fablab.booking.repository.UserAuthorityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final BookingUserRepository bookingUserRepository;
+    private final UserRepository userRepository;
     private final UserAuthorityRepository userAuthorityRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        BookingUser bookingUser = bookingUserRepository.findByUsername(username).orElseThrow(
+        BookingUser bookingUser = userRepository.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User Not Found, username  : " + username));
         //return new User(bookingUser.getUsername(), bookingUser.getPassword(), getAuthorities(bookingUser.getUsername()));
         return UserPrinciple.create(bookingUser, getAuthorities(bookingUser.getUsername()));

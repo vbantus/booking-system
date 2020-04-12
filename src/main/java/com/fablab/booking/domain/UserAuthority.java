@@ -25,6 +25,7 @@ import javax.persistence.Table;
 public class UserAuthority extends AbstractEntity{
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    //TODO should be ManyToMany
     @ManyToOne(
             fetch = FetchType.LAZY
     )
