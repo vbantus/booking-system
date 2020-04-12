@@ -33,6 +33,11 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.findDtoById(articleId));
     }
 
+    @GetMapping("/{articleId}/comments")
+    public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.findAllDtoByArticleId(articleId));
+    }
+
     @PostMapping
     public ResponseEntity<RsArticleDto> save(@RequestBody RqCreateArticleDto rqCreateArticleDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto));
@@ -48,10 +53,5 @@ public class ArticleController {
     public ResponseEntity<Void> deleteById(@PathVariable("articleId") Long articleId) {
         articleService.deleteById(articleId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @GetMapping("/{articleId}/comments")
-    public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.findAllDtoByArticleId(articleId));
     }
 }
