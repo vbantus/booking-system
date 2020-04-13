@@ -26,6 +26,11 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
     }
 
     @Override
+    public BookingSpace findById(Long id) {
+        return bookingSpaceRepository.findById(id).get();
+    }
+
+    @Override
     public RsBookingSpaceDto save(RqBookingSpaceDto rqBookingSpaceDto) {
         BookingSpace bookingSpace = BookingSpaceMapper.INSTANCE.rqCreateBookingSpaceDtoToBookingSpace(rqBookingSpaceDto);
         return BookingSpaceMapper.INSTANCE.bookingSpaceToRsBookingSpaceDto(bookingSpaceRepository.save(bookingSpace));
