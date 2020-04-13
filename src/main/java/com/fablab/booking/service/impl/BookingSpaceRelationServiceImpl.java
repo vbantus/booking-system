@@ -12,13 +12,44 @@ import com.fablab.booking.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
-public class BookingSpaceRelationImpl implements BookingSpaceRelationService {
+public class BookingSpaceRelationServiceImpl implements BookingSpaceRelationService {
 
     private final BookingSpaceRelationRepository bookingSpaceRelationRepository;
     private final UserService userService;
     private final BookingSpaceService bookingSpaceService;
+
+    @Override
+    public List<RsBookingSpaceRelationDto> findAllPendingBookings() {
+        return bookingSpaceRelationRepository.findAllPendingBookings().stream()
+                .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsBookingSpaceRelationDto> findAllActiveBookings() {
+        return bookingSpaceRelationRepository.findAllActiveBookings().stream()
+                .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsBookingSpaceRelationDto> findAllExpiredBookings() {
+        return bookingSpaceRelationRepository.findAllExpiredBookings().stream()
+                .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsBookingSpaceRelationDto> findAll() {
+        return bookingSpaceRelationRepository.findAll().stream()
+                .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto) {

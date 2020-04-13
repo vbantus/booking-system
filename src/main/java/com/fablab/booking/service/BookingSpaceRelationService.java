@@ -3,7 +3,17 @@ package com.fablab.booking.service;
 import com.fablab.booking.dto.RqBookingSpaceRelationDto;
 import com.fablab.booking.dto.RsBookingSpaceRelationDto;
 
+import java.util.List;
+
 public interface BookingSpaceRelationService {
+
+    List<RsBookingSpaceRelationDto> findAllPendingBookings();
+
+    List<RsBookingSpaceRelationDto> findAllActiveBookings();
+
+    List<RsBookingSpaceRelationDto> findAllExpiredBookings();
+
+    List<RsBookingSpaceRelationDto> findAll();
 
     RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto);
 
