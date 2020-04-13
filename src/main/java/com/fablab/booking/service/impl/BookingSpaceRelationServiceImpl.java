@@ -45,6 +45,27 @@ public class BookingSpaceRelationServiceImpl implements BookingSpaceRelationServ
     }
 
     @Override
+    public List<RsBookingSpaceRelationDto> findAllPendingBookingsByUserId(Long userId) {
+        return bookingSpaceRelationRepository.findAllPendingBookingsByUserId(userId).stream()
+                .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsBookingSpaceRelationDto> findAllActiveBookingsByUserId(Long userId) {
+        return bookingSpaceRelationRepository.findAllActiveBookingsByUserId(userId).stream()
+                .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsBookingSpaceRelationDto> findAllExpiredBookingsByUserId(Long userId) {
+        return bookingSpaceRelationRepository.findAllExpiredBookingsByUserId(userId).stream()
+                .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<RsBookingSpaceRelationDto> findAll() {
         return bookingSpaceRelationRepository.findAll().stream()
                 .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)

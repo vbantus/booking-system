@@ -1,7 +1,9 @@
 package com.fablab.booking.controller;
 
 import com.fablab.booking.dto.RsArticleDto;
+import com.fablab.booking.dto.RsBookingSpaceRelationDto;
 import com.fablab.booking.service.ArticleService;
+import com.fablab.booking.service.BookingSpaceRelationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,25 @@ import java.util.List;
 public class UserController {
 
     private final ArticleService articleService;
+    private final BookingSpaceRelationService bookingSpaceRelationService;
 
     @GetMapping("/{userId}/articles")
     public ResponseEntity<List<RsArticleDto>> getAllArticlesByUserId(@PathVariable("userId") Long userId) {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.findAllDtoByUserId(userId));
+    }
+
+    @GetMapping("/{userId}/pending-bookings")
+    public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllPendingBookingsByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllPendingBookingsByUserId(userId));
+    }
+
+    @GetMapping("/{userId}/active-bookings")
+    public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllActiveBookingsByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllActiveBookingsByUserId(userId));
+    }
+
+    @GetMapping("/{userId}/expired-bookings")
+    public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllExpiredBookingsByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllExpiredBookingsByUserId(userId));
     }
 }

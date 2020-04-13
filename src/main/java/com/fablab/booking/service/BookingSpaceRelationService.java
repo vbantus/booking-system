@@ -13,6 +13,12 @@ public interface BookingSpaceRelationService {
 
     List<RsBookingSpaceRelationDto> findAllExpiredBookings();
 
+    List<RsBookingSpaceRelationDto> findAllPendingBookingsByUserId(Long userId);
+
+    List<RsBookingSpaceRelationDto> findAllActiveBookingsByUserId(Long userId);
+
+    List<RsBookingSpaceRelationDto> findAllExpiredBookingsByUserId(Long userId);
+
     List<RsBookingSpaceRelationDto> findAll();
 
     RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto);
