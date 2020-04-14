@@ -9,6 +9,7 @@ import com.fablab.booking.mapper.CommentMapper;
 import com.fablab.booking.repository.CommentRepository;
 import com.fablab.booking.service.ArticleService;
 import com.fablab.booking.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +17,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final ArticleService articleService;
-
-    @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, ArticleService articleService) {
-        this.commentRepository = commentRepository;
-        this.articleService = articleService;
-    }
 
     @Override
     public RsCommentDto findDtoById(Long id) {

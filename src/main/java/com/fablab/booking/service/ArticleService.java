@@ -15,11 +15,11 @@ public interface ArticleService {
 
     List<RsArticleDto> findAllDtoByUserId(Long id, Pageable pageable);
 
-    List<RsArticleDto> findAll(Pageable pageable);
+    List<RsArticleDto> findAllDto(Pageable pageable);
 
     RsArticleDto save(RqCreateArticleDto rqCreateArticleDto);
 
-    RsArticleDto update (RqUpdateArticleDto rqUpdateArticleDto, Long id);
+    RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id);
 
     void deleteById(Long id);
 }

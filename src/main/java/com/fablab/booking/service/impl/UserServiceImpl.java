@@ -1,6 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingUser;
+import com.fablab.booking.domain.util.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqRegisterUserDto;
 import com.fablab.booking.dto.RsUserDto;
 import com.fablab.booking.mapper.UserMapper;
@@ -26,11 +27,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BookingUser findById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("user not found by id: " + id));
     }
 
     @Override
     public BookingUser findByUsername(String username) {
-        return userRepository.findByUsername(username).get();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("user not found by username: " + username));
     }
 }

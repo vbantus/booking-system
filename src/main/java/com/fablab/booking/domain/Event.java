@@ -4,9 +4,13 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
+import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -19,8 +23,16 @@ public class Event extends AbstractEntity {
     @Column(length = 30, nullable = false)
     private String title;
     @NotNull
-    private String content;
-    private Duration duration;
+    private String description;
+    private String location;
+    private int participationFee;
     private String imagePath;
     private int entryCost;
+    private Date startTime;
+    private Date endTime;
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "user_id")
+    private BookingUser user;
 }
