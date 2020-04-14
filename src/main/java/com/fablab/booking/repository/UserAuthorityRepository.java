@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface UserAuthorityRepository extends JpaRepository<UserAuthority, Long> {
-    List<UserAuthority> findAllByBookingUserUsername(String username);
+    List<UserAuthority> findAllByUserUsername(String username);
 }

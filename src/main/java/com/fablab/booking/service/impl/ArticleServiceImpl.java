@@ -7,18 +7,20 @@ import com.fablab.booking.dto.RsArticleDto;
 import com.fablab.booking.mapper.ArticleMapper;
 import com.fablab.booking.repository.ArticleRepository;
 import com.fablab.booking.service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fablab.booking.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
+@RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
-
-    @Autowired
-    public ArticleServiceImpl(ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
-    }
+    private final UserService userService;
 
     @Override
     public Article findById(Long id) {
@@ -32,8 +34,23 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<RsArticleDto> findAllDtoByUserId(Long id, Pageable pageable) {
+        return articleRepository.findAllByUserId(id, pageable).stream()
+                .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsArticleDto> findAll(Pageable pageable) {
+        return articleRepository.findAll(pageable).getContent().stream()
+                .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto) {
         Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
+        article.setUser(userService.findById(rqCreateArticleDto.getUserId()));
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 

@@ -24,14 +24,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        BookingUser bookingUser = userRepository.findByUsername(username).orElseThrow(
+        BookingUser user = userRepository.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User Not Found, username  : " + username));
         //return new User(bookingUser.getUsername(), bookingUser.getPassword(), getAuthorities(bookingUser.getUsername()));
-        return UserPrinciple.create(bookingUser, getAuthorities(bookingUser.getUsername()));
+        return UserPrinciple.create(user, getAuthorities(user.getUsername()));
     }
 
     private List<? extends GrantedAuthority> getAuthorities(String username) {
-        List<UserAuthority> userAuthorities = userAuthorityRepository.findAllByBookingUserUsername(username);
+        List<UserAuthority> userAuthorities = userAuthorityRepository.findAllByUserUsername(username);
         return userAuthorities.stream()
                 .map(a -> new SimpleGrantedAuthority(a.getRole().toString()))
                 .collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package com.fablab.booking.configuration;
+package com.fablab.booking.configuration.security;
 
 import com.fablab.booking.configuration.security.JwtAuthFilter;
 import com.fablab.booking.service.impl.UserDetailsServiceImpl;

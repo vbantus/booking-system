@@ -9,9 +9,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.awt.print.Book;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -32,6 +36,11 @@ public class Article extends AbstractEntity {
             orphanRemoval = true
     )
     private List<Comment> comments;
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "user_id")
+    private BookingUser user;
 
     public void addComment(Comment comment) {
         comments.add(comment);

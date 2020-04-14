@@ -1,6 +1,6 @@
 package com.fablab.booking.domain;
 
-import com.fablab.booking.domain.util.UserRole;
+import com.fablab.booking.domain.util.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Date;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,11 +23,17 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "authorities")
-public class UserAuthority extends AbstractEntity{
+@Table(name = "booking_space_relations")
+public class BookingSpaceRelation extends AbstractEntity{
+    private Date startBookingTime;
+    private Date endBookingTime;
     @Enumerated(EnumType.STRING)
-    private UserRole role;
-    //TODO should be ManyToMany
+    private BookingStatus status;
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "booking_space_id")
+    private BookingSpace bookingSpace;
     @ManyToOne(
             fetch = FetchType.LAZY
     )
