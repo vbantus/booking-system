@@ -23,11 +23,6 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping("/{commentId}")
-    public ResponseEntity<RsCommentDto> getById(@PathVariable("commentId") Long commentId) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.findDtoById(commentId));
-    }
-
     @PostMapping
     public ResponseEntity<RsCommentDto> save(@RequestBody RqCreateCommentDto rqCreateCommentDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(commentService.save(rqCreateCommentDto));

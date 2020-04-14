@@ -1,6 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingSpace;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqBookingSpaceDto;
 import com.fablab.booking.dto.RsBookingSpaceDto;
 import com.fablab.booking.mapper.BookingSpaceMapper;
@@ -19,18 +20,6 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
     private final BookingSpaceRepository bookingSpaceRepository;
 
     @Override
-    public List<RsBookingSpaceDto> findAll() {
-        return bookingSpaceRepository.findAll().stream()
-                .map(BookingSpaceMapper.INSTANCE::bookingSpaceToRsBookingSpaceDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public BookingSpace findById(Long id) {
-        return bookingSpaceRepository.findById(id).get();
-    }
-
-    @Override
     public RsBookingSpaceDto save(RqBookingSpaceDto rqBookingSpaceDto) {
         BookingSpace bookingSpace = BookingSpaceMapper.INSTANCE.rqCreateBookingSpaceDtoToBookingSpace(rqBookingSpaceDto);
         return BookingSpaceMapper.INSTANCE.bookingSpaceToRsBookingSpaceDto(bookingSpaceRepository.save(bookingSpace));
@@ -38,7 +27,7 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
 
     @Override
     public RsBookingSpaceDto update(RqBookingSpaceDto rqBookingSpaceDto, Long id) {
-        BookingSpace bookingSpace = bookingSpaceRepository.findById(id).get();
+        BookingSpace bookingSpace = findById(id);
         BookingSpaceMapper.INSTANCE.updateBookingSpaceFromRqBookingSpaceDto(rqBookingSpaceDto, bookingSpace);
         return BookingSpaceMapper.INSTANCE.bookingSpaceToRsBookingSpaceDto(bookingSpaceRepository.save(bookingSpace));
     }
@@ -46,5 +35,18 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
     @Override
     public void deleteById(Long id) {
         bookingSpaceRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RsBookingSpaceDto> getAll() {
+        return bookingSpaceRepository.findAll().stream()
+                .map(BookingSpaceMapper.INSTANCE::bookingSpaceToRsBookingSpaceDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BookingSpace findById(Long id) {
+        return bookingSpaceRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("hall not found by id: " + id));
     }
 }

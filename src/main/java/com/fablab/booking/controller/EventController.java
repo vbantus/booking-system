@@ -25,11 +25,6 @@ public class EventController {
 
     private final EventService eventService;
 
-    @GetMapping
-    public ResponseEntity<List<RsEventDto>> getAll() {
-        return ResponseEntity.ok(eventService.findAll());
-    }
-
     @PostMapping
     public ResponseEntity<RsEventDto> save(@RequestBody RqCreateEventDto rqCreateEventDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventService.save(rqCreateEventDto));
@@ -37,7 +32,7 @@ public class EventController {
 
     @PutMapping("/{eventId}")
     public ResponseEntity<RsEventDto> update(@PathVariable("eventId") Long eventId,
-                                                    @RequestBody RqUpdateEventDto rqUpdateEventDto) {
+                                             @RequestBody RqUpdateEventDto rqUpdateEventDto) {
         return ResponseEntity.ok(eventService.update(rqUpdateEventDto, eventId));
     }
 
@@ -46,4 +41,10 @@ public class EventController {
         eventService.deleteById(eventId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping
+    public ResponseEntity<List<RsEventDto>> getAll() {
+        return ResponseEntity.ok(eventService.getAll());
+    }
+
 }

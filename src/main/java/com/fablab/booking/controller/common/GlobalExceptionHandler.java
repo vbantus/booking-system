@@ -1,6 +1,6 @@
 package com.fablab.booking.controller.common;
 
-import com.fablab.booking.domain.util.exception.EntityNotFoundException;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

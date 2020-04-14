@@ -8,14 +8,13 @@ import java.util.List;
 
 public interface BookingSpaceService {
 
-    List<RsBookingSpaceDto> findAll();
-
-    BookingSpace findById(Long id);
-
     RsBookingSpaceDto save(RqBookingSpaceDto rqBookingSpaceDto);
 
     RsBookingSpaceDto update(RqBookingSpaceDto rqBookingSpaceDto, Long id);
 
     void deleteById(Long id);
 
+    List<RsBookingSpaceDto> getAll();
+
+    BookingSpace findById(Long id);
 }

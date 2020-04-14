@@ -2,6 +2,7 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.domain.Event;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateEventDto;
 import com.fablab.booking.dto.RqUpdateEventDto;
 import com.fablab.booking.dto.RsEventDto;
@@ -23,20 +24,6 @@ public class EventServiceImpl implements EventService {
     private final UserService userService;
 
     @Override
-    public List<RsEventDto> findAllDtoByUserId(Long userId) {
-        return eventRepository.findAllByUserId(userId).stream()
-                .map(EventMapper.INSTANCE::eventToRsEventDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<RsEventDto> findAll() {
-        return eventRepository.findAll().stream()
-                .map(EventMapper.INSTANCE::eventToRsEventDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public RsEventDto save(RqCreateEventDto rqCreateEventDto) {
         Event event = EventMapper.INSTANCE.rqCreateEventDtoToEvent(rqCreateEventDto);
         BookingUser user = userService.findById(rqCreateEventDto.getUserId());
@@ -54,5 +41,25 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteById(Long id) {
         eventRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RsEventDto> getAllByUserId(Long userId) {
+        return eventRepository.findAllByUserId(userId).stream()
+                .map(EventMapper.INSTANCE::eventToRsEventDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsEventDto> getAll() {
+        return eventRepository.findAll().stream()
+                .map(EventMapper.INSTANCE::eventToRsEventDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Event findById(Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("user not found by id: " + id));
     }
 }

@@ -2,6 +2,7 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Article;
 import com.fablab.booking.domain.Comment;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateCommentDto;
 import com.fablab.booking.dto.RqUpdateCommentDto;
 import com.fablab.booking.dto.RsCommentDto;
@@ -24,20 +25,6 @@ public class CommentServiceImpl implements CommentService {
     private final ArticleService articleService;
 
     @Override
-    public RsCommentDto findDtoById(Long id) {
-        // TODO ad exception for comment not found
-        Comment comment = commentRepository.findById(id).orElse(null);
-        return CommentMapper.INSTANCE.commentToRsCommentDto(comment);
-    }
-
-    @Override
-    public List<RsCommentDto> findAllDtoByArticleId(Long id) {
-        return commentRepository.findAllByArticleId(id).stream()
-                .map(CommentMapper.INSTANCE::commentToRsCommentDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public RsCommentDto save(RqCreateCommentDto rqCreateCommentDto) {
         Comment comment = CommentMapper.INSTANCE.rqCreateCommentDtoToComment(rqCreateCommentDto);
         Article article = articleService.findById(rqCreateCommentDto.getArticleId());
@@ -47,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public RsCommentDto update(RqUpdateCommentDto rqUpdateCommentDto, Long id) {
-        Comment comment = commentRepository.findById(id).orElse(null);
+        Comment comment = findById(id);
         CommentMapper.INSTANCE.updateCommentFromRqUpdateCommentDto(rqUpdateCommentDto, comment);
         return CommentMapper.INSTANCE.commentToRsCommentDto(commentRepository.save(comment));
     }
@@ -55,5 +42,18 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteById(Long id) {
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RsCommentDto> getAllByArticleId(Long id) {
+        return commentRepository.findAllByArticleId(id).stream()
+                .map(CommentMapper.INSTANCE::commentToRsCommentDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Comment findById(Long id) {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("comment not found by id: " + id));
     }
 }

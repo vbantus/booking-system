@@ -1,6 +1,6 @@
 package com.fablab.booking.domain;
 
-import com.fablab.booking.domain.util.BookingStatus;
+import com.fablab.booking.domain.common.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
