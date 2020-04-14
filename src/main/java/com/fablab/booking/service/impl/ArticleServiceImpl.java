@@ -1,6 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Article;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateArticleDto;
 import com.fablab.booking.dto.RqUpdateArticleDto;
 import com.fablab.booking.dto.RsArticleDto;
@@ -31,7 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id) {
-        Article article = articleRepository.findById(id).orElse(null);
+        Article article = findById(id);
         ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
@@ -48,14 +49,10 @@ public class ArticleServiceImpl implements ArticleService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public Article findById(Long id) {
-        return articleRepository.findById(id).orElse(null);
-    }
 
     @Override
     public RsArticleDto getById(Long id) {
-        Article article = articleRepository.findById(id).orElse(null);
+        Article article = findById(id);
         return ArticleMapper.INSTANCE.articleToRsArticleDto(article);
     }
 
@@ -66,4 +63,9 @@ public class ArticleServiceImpl implements ArticleService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Article findById(Long id) {
+        return articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("article not found by id: " + id));
+    }
 }

@@ -67,6 +67,6 @@ public class ArticleController {
 
     @GetMapping("/{articleId}/comments")
     public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.findAllDtoByArticleId(articleId));
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllByArticleId(articleId));
     }
 }

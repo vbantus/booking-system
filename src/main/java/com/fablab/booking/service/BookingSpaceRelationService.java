@@ -1,5 +1,6 @@
 package com.fablab.booking.service;
 
+import com.fablab.booking.domain.BookingSpaceRelation;
 import com.fablab.booking.dto.RqBookingSpaceRelationDto;
 import com.fablab.booking.dto.RsBookingSpaceRelationDto;
 
@@ -26,4 +27,6 @@ public interface BookingSpaceRelationService {
     List<RsBookingSpaceRelationDto> getAllActiveBookingsByUserId(Long userId);
 
     List<RsBookingSpaceRelationDto> getAllExpiredBookingsByUserId(Long userId);
+
+    BookingSpaceRelation findById(Long id);
 }

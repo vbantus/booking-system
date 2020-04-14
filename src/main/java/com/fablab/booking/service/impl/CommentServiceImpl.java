@@ -2,6 +2,7 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Article;
 import com.fablab.booking.domain.Comment;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateCommentDto;
 import com.fablab.booking.dto.RqUpdateCommentDto;
 import com.fablab.booking.dto.RsCommentDto;
@@ -33,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public RsCommentDto update(RqUpdateCommentDto rqUpdateCommentDto, Long id) {
-        Comment comment = commentRepository.findById(id).orElse(null);
+        Comment comment = findById(id);
         CommentMapper.INSTANCE.updateCommentFromRqUpdateCommentDto(rqUpdateCommentDto, comment);
         return CommentMapper.INSTANCE.commentToRsCommentDto(commentRepository.save(comment));
     }
@@ -44,9 +45,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<RsCommentDto> findAllDtoByArticleId(Long id) {
+    public List<RsCommentDto> getAllByArticleId(Long id) {
         return commentRepository.findAllByArticleId(id).stream()
                 .map(CommentMapper.INSTANCE::commentToRsCommentDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Comment findById(Long id) {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("comment not found by id: " + id));
     }
 }

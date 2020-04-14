@@ -1,6 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingSpace;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqBookingSpaceDto;
 import com.fablab.booking.dto.RsBookingSpaceDto;
 import com.fablab.booking.mapper.BookingSpaceMapper;
@@ -26,7 +27,7 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
 
     @Override
     public RsBookingSpaceDto update(RqBookingSpaceDto rqBookingSpaceDto, Long id) {
-        BookingSpace bookingSpace = bookingSpaceRepository.findById(id).get();
+        BookingSpace bookingSpace = findById(id);
         BookingSpaceMapper.INSTANCE.updateBookingSpaceFromRqBookingSpaceDto(rqBookingSpaceDto, bookingSpace);
         return BookingSpaceMapper.INSTANCE.bookingSpaceToRsBookingSpaceDto(bookingSpaceRepository.save(bookingSpace));
     }
@@ -45,7 +46,7 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
 
     @Override
     public BookingSpace findById(Long id) {
-        return bookingSpaceRepository.findById(id).get();
+        return bookingSpaceRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("hall not found by id: " + id));
     }
-
 }

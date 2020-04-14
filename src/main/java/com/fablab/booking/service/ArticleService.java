@@ -18,9 +18,9 @@ public interface ArticleService {
 
     List<RsArticleDto> getAll(Pageable pageable);
 
-    Article findById(Long id);
-
     RsArticleDto getById(Long id);
 
     List<RsArticleDto> getAllByUserId(Long id, Pageable pageable);
+
+    Article findById(Long id);
 }

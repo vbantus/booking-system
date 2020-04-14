@@ -2,6 +2,7 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.domain.Event;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateEventDto;
 import com.fablab.booking.dto.RqUpdateEventDto;
 import com.fablab.booking.dto.RsEventDto;
@@ -54,5 +55,11 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findAll().stream()
                 .map(EventMapper.INSTANCE::eventToRsEventDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Event findById(Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("user not found by id: " + id));
     }
 }

@@ -17,5 +17,4 @@ public interface BookingSpaceService {
     List<RsBookingSpaceDto> getAll();
 
     BookingSpace findById(Long id);
-
 }

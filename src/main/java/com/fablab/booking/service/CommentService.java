@@ -1,5 +1,6 @@
 package com.fablab.booking.service;
 
+import com.fablab.booking.domain.Comment;
 import com.fablab.booking.dto.RqCreateCommentDto;
 import com.fablab.booking.dto.RqUpdateCommentDto;
 import com.fablab.booking.dto.RsCommentDto;
@@ -14,6 +15,7 @@ public interface CommentService {
 
     void deleteById(Long id);
 
-    List<RsCommentDto> findAllDtoByArticleId(Long id);
+    List<RsCommentDto> getAllByArticleId(Long id);
 
+    Comment findById(Long id);
 }

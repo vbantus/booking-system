@@ -1,5 +1,6 @@
 package com.fablab.booking.service;
 
+import com.fablab.booking.domain.Event;
 import com.fablab.booking.dto.RqCreateEventDto;
 import com.fablab.booking.dto.RqUpdateEventDto;
 import com.fablab.booking.dto.RsEventDto;
@@ -18,4 +19,5 @@ public interface EventService {
 
     List<RsEventDto> getAll();
 
+    Event findById(Long id);
 }

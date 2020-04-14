@@ -2,6 +2,7 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingSpaceRelation;
 import com.fablab.booking.domain.common.BookingStatus;
+import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqBookingSpaceRelationDto;
 import com.fablab.booking.dto.RsBookingSpaceRelationDto;
 import com.fablab.booking.mapper.BookingSpaceRelationMapper;
@@ -38,7 +39,7 @@ public class BookingSpaceRelationServiceImpl implements BookingSpaceRelationServ
 
     @Override
     public RsBookingSpaceRelationDto update(RqBookingSpaceRelationDto rqBookingSpaceRelationDto, Long id) {
-        BookingSpaceRelation bookingSpaceRelation = bookingSpaceRelationRepository.findById(id).get();
+        BookingSpaceRelation bookingSpaceRelation = findById(id);
         BookingSpaceRelationMapper.INSTANCE
                 .updateBookingSpaceRelationFromRqBookingSpaceRelationDto(rqBookingSpaceRelationDto, bookingSpaceRelation);
 
@@ -98,5 +99,11 @@ public class BookingSpaceRelationServiceImpl implements BookingSpaceRelationServ
         return bookingSpaceRelationRepository.findAllExpiredBookingsByUserId(userId).stream()
                 .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public BookingSpaceRelation findById(Long id) {
+        return bookingSpaceRelationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("hall booking not found by id: " + id));
     }
 }
