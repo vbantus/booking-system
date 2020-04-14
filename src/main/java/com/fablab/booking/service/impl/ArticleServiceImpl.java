@@ -6,10 +6,10 @@ import com.fablab.booking.dto.RqUpdateArticleDto;
 import com.fablab.booking.dto.RsArticleDto;
 import com.fablab.booking.mapper.ArticleMapper;
 import com.fablab.booking.repository.ArticleRepository;
-import com.fablab.booking.repository.UserRepository;
 import com.fablab.booking.service.ArticleService;
 import com.fablab.booking.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,8 +34,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<RsArticleDto> findAllDtoByUserId(Long id) {
-        return articleRepository.findAllByUserId(id).stream()
+    public List<RsArticleDto> findAllDtoByUserId(Long id, Pageable pageable) {
+        return articleRepository.findAllByUserId(id, pageable).stream()
+                .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsArticleDto> findAll(Pageable pageable) {
+        return articleRepository.findAll(pageable).getContent().stream()
                 .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
                 .collect(Collectors.toList());
     }
