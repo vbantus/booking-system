@@ -2,8 +2,10 @@ package com.fablab.booking.controller;
 
 import com.fablab.booking.dto.RsArticleDto;
 import com.fablab.booking.dto.RsBookingSpaceRelationDto;
+import com.fablab.booking.dto.RsEventDto;
 import com.fablab.booking.service.ArticleService;
 import com.fablab.booking.service.BookingSpaceRelationService;
+import com.fablab.booking.service.EventService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,12 @@ public class UserController {
 
     private final ArticleService articleService;
     private final BookingSpaceRelationService bookingSpaceRelationService;
+    private final EventService eventService;
+
+    @GetMapping("/{userId}/events")
+    public ResponseEntity<List<RsEventDto>> getAllEventsByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(eventService.findAllDtoByUserId(userId));
+    }
 
     @GetMapping("/{userId}/articles")
     public ResponseEntity<List<RsArticleDto>> getAllArticlesByUserId(@PathVariable("userId") Long userId,

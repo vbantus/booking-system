@@ -50,7 +50,7 @@ public class ArticleController {
     })
     @GetMapping
     public ResponseEntity<List<RsArticleDto>> getAll(@ApiIgnore Pageable pageable) {
-        return ResponseEntity.ok(articleService.findAll(pageable));
+        return ResponseEntity.ok(articleService.findAllDto(pageable));
     }
 
     @PostMapping

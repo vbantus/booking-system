@@ -41,7 +41,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<RsArticleDto> findAll(Pageable pageable) {
+    public List<RsArticleDto> findAllDto(Pageable pageable) {
         return articleRepository.findAll(pageable).getContent().stream()
                 .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
                 .collect(Collectors.toList());
