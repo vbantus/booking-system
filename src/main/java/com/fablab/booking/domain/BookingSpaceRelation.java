@@ -31,8 +31,8 @@ public class BookingSpaceRelation extends AbstractEntity{
     @ManyToOne(
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "booking_space_id")
-    private BookingSpace bookingSpace;
+    @JoinColumn(name = "room_id")
+    private Room room;
     @ManyToOne(
             fetch = FetchType.LAZY
     )

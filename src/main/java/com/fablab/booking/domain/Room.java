@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "booking_spaces")
-public class BookingSpace extends AbstractEntity{
+@Table(name = "rooms")
+public class Room extends AbstractEntity{
     private String name;
     private int pricePerHour;
     private String description;

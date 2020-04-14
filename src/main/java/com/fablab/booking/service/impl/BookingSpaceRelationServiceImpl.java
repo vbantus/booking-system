@@ -8,7 +8,7 @@ import com.fablab.booking.dto.RsBookingSpaceRelationDto;
 import com.fablab.booking.mapper.BookingSpaceRelationMapper;
 import com.fablab.booking.repository.BookingSpaceRelationRepository;
 import com.fablab.booking.service.BookingSpaceRelationService;
-import com.fablab.booking.service.BookingSpaceService;
+import com.fablab.booking.service.RoomService;
 import com.fablab.booking.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class BookingSpaceRelationServiceImpl implements BookingSpaceRelationServ
 
     private final BookingSpaceRelationRepository bookingSpaceRelationRepository;
     private final UserService userService;
-    private final BookingSpaceService bookingSpaceService;
+    private final RoomService roomService;
 
     @Override
     public RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto) {
@@ -31,7 +31,7 @@ public class BookingSpaceRelationServiceImpl implements BookingSpaceRelationServ
 
         bookingSpaceRelation.setStatus(BookingStatus.CREATED);
         bookingSpaceRelation.setUser(userService.findById(rqBookingSpaceRelationDto.getUserId()));
-        bookingSpaceRelation.setBookingSpace(bookingSpaceService.findById(rqBookingSpaceRelationDto.getBookingSpaceId()));
+        bookingSpaceRelation.setRoom(roomService.findById(rqBookingSpaceRelationDto.getBookingSpaceId()));
 
         return BookingSpaceRelationMapper.INSTANCE
                 .bookingSpaceRelationToRsBookingSpaceRelationDto(bookingSpaceRelationRepository.save(bookingSpaceRelation));

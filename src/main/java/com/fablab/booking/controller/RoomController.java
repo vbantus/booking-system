@@ -1,8 +1,8 @@
 package com.fablab.booking.controller;
 
-import com.fablab.booking.dto.RqBookingSpaceDto;
-import com.fablab.booking.dto.RsBookingSpaceDto;
-import com.fablab.booking.service.BookingSpaceService;
+import com.fablab.booking.dto.RqRoomDto;
+import com.fablab.booking.dto.RsRoomDto;
+import com.fablab.booking.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,30 +20,30 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/booking/api/booking-space")
-public class BookingSpaceController {
+public class RoomController {
 
-    private final BookingSpaceService bookingSpaceService;
+    private final RoomService roomService;
 
     @PostMapping
-    public ResponseEntity<RsBookingSpaceDto> save(@RequestBody RqBookingSpaceDto rqBookingSpaceDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookingSpaceService.save(rqBookingSpaceDto));
+    public ResponseEntity<RsRoomDto> save(@RequestBody RqRoomDto rqRoomDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(roomService.save(rqRoomDto));
     }
 
     @PutMapping("/{bookingSpaceId}")
-    public ResponseEntity<RsBookingSpaceDto> update(@PathVariable("bookingSpaceId") Long bookingSpaceId,
-                                                    @RequestBody RqBookingSpaceDto rqBookingSpaceDto) {
-        return ResponseEntity.ok(bookingSpaceService.update(rqBookingSpaceDto, bookingSpaceId));
+    public ResponseEntity<RsRoomDto> update(@PathVariable("bookingSpaceId") Long bookingSpaceId,
+                                            @RequestBody RqRoomDto rqRoomDto) {
+        return ResponseEntity.ok(roomService.update(rqRoomDto, bookingSpaceId));
     }
 
     @DeleteMapping("/{bookingSpaceId}")
     public ResponseEntity<Void> deleteById(@PathVariable("bookingSpaceId") Long bookingSpaceId) {
-        bookingSpaceService.deleteById(bookingSpaceId);
+        roomService.deleteById(bookingSpaceId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping
-    public ResponseEntity<List<RsBookingSpaceDto>> getAll() {
-        return ResponseEntity.ok(bookingSpaceService.getAll());
+    public ResponseEntity<List<RsRoomDto>> getAll() {
+        return ResponseEntity.ok(roomService.getAll());
     }
 
 }
