@@ -22,14 +22,14 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public RsRoomDto save(RqRoomDto rqRoomDto) {
         Room room = RoomMapper.INSTANCE.rqCreateBookingSpaceDtoToBookingSpace(rqRoomDto);
-        return RoomMapper.INSTANCE.bookingSpaceToRsBookingSpaceDto(roomRepository.save(room));
+        return RoomMapper.INSTANCE.roomToRsRoomDto(roomRepository.save(room));
     }
 
     @Override
     public RsRoomDto update(RqRoomDto rqRoomDto, Long id) {
         Room room = findById(id);
         RoomMapper.INSTANCE.updateBookingSpaceFromRqBookingSpaceDto(rqRoomDto, room);
-        return RoomMapper.INSTANCE.bookingSpaceToRsBookingSpaceDto(roomRepository.save(room));
+        return RoomMapper.INSTANCE.roomToRsRoomDto(roomRepository.save(room));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<RsRoomDto> getAll() {
         return roomRepository.findAll().stream()
-                .map(RoomMapper.INSTANCE::bookingSpaceToRsBookingSpaceDto)
+                .map(RoomMapper.INSTANCE::roomToRsRoomDto)
                 .collect(Collectors.toList());
     }
 

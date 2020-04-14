@@ -15,7 +15,7 @@ public interface RoomMapper {
 
     Room rqCreateBookingSpaceDtoToBookingSpace(RqRoomDto rqRoomDto);
 
-    RsRoomDto bookingSpaceToRsBookingSpaceDto(Room room);
+    RsRoomDto roomToRsRoomDto(Room room);
 
     void updateBookingSpaceFromRqBookingSpaceDto(RqRoomDto rqRoomDto, @MappingTarget Room room);
 }

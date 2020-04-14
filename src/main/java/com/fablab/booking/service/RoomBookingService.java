@@ -1,32 +1,32 @@
 package com.fablab.booking.service;
 
 import com.fablab.booking.domain.RoomBooking;
-import com.fablab.booking.dto.RqBookingSpaceRelationDto;
-import com.fablab.booking.dto.RsBookingSpaceRelationDto;
+import com.fablab.booking.dto.RqRoomBookingDto;
+import com.fablab.booking.dto.RsRoomBookingDto;
 
 import java.util.List;
 
 public interface RoomBookingService {
 
-    RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto);
+    RsRoomBookingDto save(RqRoomBookingDto rqRoomBookingDto);
 
-    RsBookingSpaceRelationDto update(RqBookingSpaceRelationDto rqBookingSpaceRelationDto, Long id);
+    RsRoomBookingDto update(RqRoomBookingDto rqRoomBookingDto, Long id);
 
     void deleteById(Long id);
 
-    List<RsBookingSpaceRelationDto> getAll();
+    List<RsRoomBookingDto> getAll();
 
-    List<RsBookingSpaceRelationDto> getAllPendingBookings();
+    List<RsRoomBookingDto> getAllPendingBookings();
 
-    List<RsBookingSpaceRelationDto> getAllActiveBookings();
+    List<RsRoomBookingDto> getAllActiveBookings();
 
-    List<RsBookingSpaceRelationDto> getAllExpiredBookings();
+    List<RsRoomBookingDto> getAllExpiredBookings();
 
-    List<RsBookingSpaceRelationDto> getAllPendingBookingsByUserId(Long userId);
+    List<RsRoomBookingDto> getAllPendingBookingsByUserId(Long userId);
 
-    List<RsBookingSpaceRelationDto> getAllActiveBookingsByUserId(Long userId);
+    List<RsRoomBookingDto> getAllActiveBookingsByUserId(Long userId);
 
-    List<RsBookingSpaceRelationDto> getAllExpiredBookingsByUserId(Long userId);
+    List<RsRoomBookingDto> getAllExpiredBookingsByUserId(Long userId);
 
     RoomBooking findById(Long id);
 }

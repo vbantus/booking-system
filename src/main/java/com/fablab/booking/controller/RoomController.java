@@ -19,7 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/booking/api/booking-space")
+@RequestMapping("/booking/api/room")
 public class RoomController {
 
     private final RoomService roomService;
@@ -29,15 +29,15 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.CREATED).body(roomService.save(rqRoomDto));
     }
 
-    @PutMapping("/{bookingSpaceId}")
-    public ResponseEntity<RsRoomDto> update(@PathVariable("bookingSpaceId") Long bookingSpaceId,
+    @PutMapping("/{roomId}")
+    public ResponseEntity<RsRoomDto> update(@PathVariable("roomId") Long roomId,
                                             @RequestBody RqRoomDto rqRoomDto) {
-        return ResponseEntity.ok(roomService.update(rqRoomDto, bookingSpaceId));
+        return ResponseEntity.ok(roomService.update(rqRoomDto, roomId));
     }
 
-    @DeleteMapping("/{bookingSpaceId}")
-    public ResponseEntity<Void> deleteById(@PathVariable("bookingSpaceId") Long bookingSpaceId) {
-        roomService.deleteById(bookingSpaceId);
+    @DeleteMapping("/{roomId}")
+    public ResponseEntity<Void> deleteById(@PathVariable("roomId") Long roomId) {
+        roomService.deleteById(roomId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

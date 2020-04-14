@@ -45,7 +45,7 @@ public class DbSeeder implements CommandLineRunner {
         BookingUser adminUser = BookingUser.builder()
                 .username("admin")
                 .password("admin")
-                .email("user@gmail.com")
+                .email("admin@gmail.com")
                 .authorities(Set.of(adminAuthority))
                 .build();
 

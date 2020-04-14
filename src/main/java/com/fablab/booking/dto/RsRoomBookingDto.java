@@ -5,10 +5,10 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class RsBookingSpaceRelationDto extends AbstractResponseEntityDto{
+public class RsRoomBookingDto extends AbstractResponseEntityDto{
     private Date startBookingTime;
     private Date endBookingTime;
     private String status;
-    private Long bookingSpaceId;
+    private Long roomId;
     private Long userId;
 }

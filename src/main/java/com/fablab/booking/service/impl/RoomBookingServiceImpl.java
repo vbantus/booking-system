@@ -3,8 +3,8 @@ package com.fablab.booking.service.impl;
 import com.fablab.booking.domain.RoomBooking;
 import com.fablab.booking.domain.common.BookingStatus;
 import com.fablab.booking.domain.common.exception.EntityNotFoundException;
-import com.fablab.booking.dto.RqBookingSpaceRelationDto;
-import com.fablab.booking.dto.RsBookingSpaceRelationDto;
+import com.fablab.booking.dto.RqRoomBookingDto;
+import com.fablab.booking.dto.RsRoomBookingDto;
 import com.fablab.booking.mapper.RoomBookingMapper;
 import com.fablab.booking.repository.RoomBookingRepository;
 import com.fablab.booking.service.RoomBookingService;
@@ -25,26 +25,26 @@ public class RoomBookingServiceImpl implements RoomBookingService {
     private final RoomService roomService;
 
     @Override
-    public RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto) {
+    public RsRoomBookingDto save(RqRoomBookingDto rqRoomBookingDto) {
         RoomBooking roomBooking =
-                RoomBookingMapper.INSTANCE.rqBookingSpaceRelationDtoToBookingSpaceRelation(rqBookingSpaceRelationDto);
+                RoomBookingMapper.INSTANCE.rqBookingSpaceRelationDtoToBookingSpaceRelation(rqRoomBookingDto);
 
         roomBooking.setStatus(BookingStatus.CREATED);
-        roomBooking.setUser(userService.findById(rqBookingSpaceRelationDto.getUserId()));
-        roomBooking.setRoom(roomService.findById(rqBookingSpaceRelationDto.getBookingSpaceId()));
+        roomBooking.setUser(userService.findById(rqRoomBookingDto.getUserId()));
+        roomBooking.setRoom(roomService.findById(rqRoomBookingDto.getRoomId()));
 
         return RoomBookingMapper.INSTANCE
-                .bookingSpaceRelationToRsBookingSpaceRelationDto(roomBookingRepository.save(roomBooking));
+                .roomBookingToRsRoomBookingDto(roomBookingRepository.save(roomBooking));
     }
 
     @Override
-    public RsBookingSpaceRelationDto update(RqBookingSpaceRelationDto rqBookingSpaceRelationDto, Long id) {
+    public RsRoomBookingDto update(RqRoomBookingDto rqRoomBookingDto, Long id) {
         RoomBooking roomBooking = findById(id);
         RoomBookingMapper.INSTANCE
-                .updateBookingSpaceRelationFromRqBookingSpaceRelationDto(rqBookingSpaceRelationDto, roomBooking);
+                .updateBookingSpaceRelationFromRqBookingSpaceRelationDto(rqRoomBookingDto, roomBooking);
 
         return RoomBookingMapper.INSTANCE
-                .bookingSpaceRelationToRsBookingSpaceRelationDto(roomBookingRepository.save(roomBooking));
+                .roomBookingToRsRoomBookingDto(roomBookingRepository.save(roomBooking));
     }
 
     @Override
@@ -53,51 +53,51 @@ public class RoomBookingServiceImpl implements RoomBookingService {
     }
 
     @Override
-    public List<RsBookingSpaceRelationDto> getAll() {
+    public List<RsRoomBookingDto> getAll() {
         return roomBookingRepository.findAll().stream()
-                .map(RoomBookingMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .map(RoomBookingMapper.INSTANCE::roomBookingToRsRoomBookingDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RsBookingSpaceRelationDto> getAllPendingBookings() {
+    public List<RsRoomBookingDto> getAllPendingBookings() {
         return roomBookingRepository.findAllPendingBookings().stream()
-                .map(RoomBookingMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .map(RoomBookingMapper.INSTANCE::roomBookingToRsRoomBookingDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RsBookingSpaceRelationDto> getAllActiveBookings() {
+    public List<RsRoomBookingDto> getAllActiveBookings() {
         return roomBookingRepository.findAllActiveBookings().stream()
-                .map(RoomBookingMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .map(RoomBookingMapper.INSTANCE::roomBookingToRsRoomBookingDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RsBookingSpaceRelationDto> getAllExpiredBookings() {
+    public List<RsRoomBookingDto> getAllExpiredBookings() {
         return roomBookingRepository.findAllExpiredBookings().stream()
-                .map(RoomBookingMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .map(RoomBookingMapper.INSTANCE::roomBookingToRsRoomBookingDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RsBookingSpaceRelationDto> getAllPendingBookingsByUserId(Long userId) {
+    public List<RsRoomBookingDto> getAllPendingBookingsByUserId(Long userId) {
         return roomBookingRepository.findAllPendingBookingsByUserId(userId).stream()
-                .map(RoomBookingMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .map(RoomBookingMapper.INSTANCE::roomBookingToRsRoomBookingDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RsBookingSpaceRelationDto> getAllActiveBookingsByUserId(Long userId) {
+    public List<RsRoomBookingDto> getAllActiveBookingsByUserId(Long userId) {
         return roomBookingRepository.findAllActiveBookingsByUserId(userId).stream()
-                .map(RoomBookingMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .map(RoomBookingMapper.INSTANCE::roomBookingToRsRoomBookingDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RsBookingSpaceRelationDto> getAllExpiredBookingsByUserId(Long userId) {
+    public List<RsRoomBookingDto> getAllExpiredBookingsByUserId(Long userId) {
         return roomBookingRepository.findAllExpiredBookingsByUserId(userId).stream()
-                .map(RoomBookingMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
+                .map(RoomBookingMapper.INSTANCE::roomBookingToRsRoomBookingDto)
                 .collect(Collectors.toList());
     }
 
