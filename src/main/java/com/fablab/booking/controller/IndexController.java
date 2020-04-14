@@ -1,7 +1,5 @@
 package com.fablab.booking.controller;
 
-import com.fablab.booking.domain.UserAuthority;
-import com.fablab.booking.domain.util.UserRole;
 import com.fablab.booking.repository.BookingSpaceRelationRepository;
 import com.fablab.booking.repository.UserAuthorityRepository;
 import com.fablab.booking.repository.UserRepository;

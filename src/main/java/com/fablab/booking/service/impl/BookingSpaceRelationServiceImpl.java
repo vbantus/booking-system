@@ -1,7 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingSpaceRelation;
-import com.fablab.booking.domain.util.BookingStatus;
+import com.fablab.booking.domain.common.BookingStatus;
 import com.fablab.booking.dto.RqBookingSpaceRelationDto;
 import com.fablab.booking.dto.RsBookingSpaceRelationDto;
 import com.fablab.booking.mapper.BookingSpaceRelationMapper;

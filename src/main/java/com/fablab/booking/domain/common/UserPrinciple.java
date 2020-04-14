@@ -1,4 +1,4 @@
-package com.fablab.booking.domain.util;
+package com.fablab.booking.domain.common;
 
 import com.fablab.booking.domain.BookingUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;

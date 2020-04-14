@@ -2,7 +2,7 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.domain.UserAuthority;
-import com.fablab.booking.domain.util.UserPrinciple;
+import com.fablab.booking.domain.common.UserPrinciple;
 import com.fablab.booking.repository.UserRepository;
 import com.fablab.booking.repository.UserAuthorityRepository;
 import lombok.RequiredArgsConstructor;

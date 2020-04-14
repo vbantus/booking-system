@@ -1,10 +1,8 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.configuration.security.JwtProvider;
-import com.fablab.booking.domain.util.UserPrinciple;
 import com.fablab.booking.dto.JwtResponseDto;
 import com.fablab.booking.service.AuthenticationService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

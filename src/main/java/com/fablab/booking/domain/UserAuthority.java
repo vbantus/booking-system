@@ -1,6 +1,6 @@
 package com.fablab.booking.domain;
 
-import com.fablab.booking.domain.util.UserRole;
+import com.fablab.booking.domain.common.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
