@@ -1,10 +1,10 @@
 package com.fablab.booking.controller;
 
 import com.fablab.booking.dto.RsArticleDto;
-import com.fablab.booking.dto.RsBookingSpaceRelationDto;
+import com.fablab.booking.dto.RsRoomBookingDto;
 import com.fablab.booking.dto.RsEventDto;
 import com.fablab.booking.service.ArticleService;
-import com.fablab.booking.service.BookingSpaceRelationService;
+import com.fablab.booking.service.RoomBookingService;
 import com.fablab.booking.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +24,7 @@ import java.util.List;
 public class UserController {
 
     private final ArticleService articleService;
-    private final BookingSpaceRelationService bookingSpaceRelationService;
+    private final RoomBookingService roomBookingService;
     private final EventService eventService;
 
     @GetMapping("/{userId}/events")
@@ -39,17 +39,17 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/pending-bookings")
-    public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllPendingBookingsByUserId(@PathVariable("userId") Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllPendingBookingsByUserId(userId));
+    public ResponseEntity<List<RsRoomBookingDto>> getAllPendingBookingsByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(roomBookingService.getAllPendingBookingsByUserId(userId));
     }
 
     @GetMapping("/{userId}/active-bookings")
-    public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllActiveBookingsByUserId(@PathVariable("userId") Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllActiveBookingsByUserId(userId));
+    public ResponseEntity<List<RsRoomBookingDto>> getAllActiveBookingsByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(roomBookingService.getAllActiveBookingsByUserId(userId));
     }
 
     @GetMapping("/{userId}/expired-bookings")
-    public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllExpiredBookingsByUserId(@PathVariable("userId") Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllExpiredBookingsByUserId(userId));
+    public ResponseEntity<List<RsRoomBookingDto>> getAllExpiredBookingsByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(roomBookingService.getAllExpiredBookingsByUserId(userId));
     }
 }

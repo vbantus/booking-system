@@ -3,7 +3,7 @@ package com.fablab.booking.dto;
 import lombok.Data;
 
 @Data
-public class RqBookingSpaceDto {
+public class RqRoomDto {
     private String name;
     private int pricePerHour;
     private String description;

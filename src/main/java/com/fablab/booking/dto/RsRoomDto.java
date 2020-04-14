@@ -3,7 +3,7 @@ package com.fablab.booking.dto;
 import lombok.Data;
 
 @Data
-public class RsBookingSpaceDto extends AbstractResponseEntityDto {
+public class RsRoomDto extends AbstractResponseEntityDto {
     private String name;
     private int pricePerHour;
     private String description;

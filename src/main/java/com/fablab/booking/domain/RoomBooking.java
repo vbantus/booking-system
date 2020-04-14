@@ -22,8 +22,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "booking_space_relations")
-public class BookingSpaceRelation extends AbstractEntity{
+@Table(name = "rooms_booking")
+public class RoomBooking extends AbstractEntity{
     private Date startBookingTime;
     private Date endBookingTime;
     @Enumerated(EnumType.STRING)
@@ -31,8 +31,8 @@ public class BookingSpaceRelation extends AbstractEntity{
     @ManyToOne(
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "booking_space_id")
-    private BookingSpace bookingSpace;
+    @JoinColumn(name = "room_id")
+    private Room room;
     @ManyToOne(
             fetch = FetchType.LAZY
     )
