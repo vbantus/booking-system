@@ -49,16 +49,6 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/{articleId}")
-    public ResponseEntity<RsArticleDto> getById(@PathVariable("articleId") Long articleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(articleService.findDtoById(articleId));
-    }
-
-    @GetMapping("/{articleId}/comments")
-    public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.findAllDtoByArticleId(articleId));
-    }
-
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
                     value = "Results page you want to retrieve (0..N)"),
@@ -67,6 +57,16 @@ public class ArticleController {
     })
     @GetMapping
     public ResponseEntity<List<RsArticleDto>> getAll(@ApiIgnore Pageable pageable) {
-        return ResponseEntity.ok(articleService.findAllDto(pageable));
+        return ResponseEntity.ok(articleService.getAll(pageable));
+    }
+
+    @GetMapping("/{articleId}")
+    public ResponseEntity<RsArticleDto> getById(@PathVariable("articleId") Long articleId) {
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.getById(articleId));
+    }
+
+    @GetMapping("/{articleId}/comments")
+    public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.findAllDtoByArticleId(articleId));
     }
 }

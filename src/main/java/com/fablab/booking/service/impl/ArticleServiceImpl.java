@@ -42,26 +42,26 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article findById(Long id) {
-        return articleRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public RsArticleDto findDtoById(Long id) {
-        Article article = articleRepository.findById(id).orElse(null);
-        return ArticleMapper.INSTANCE.articleToRsArticleDto(article);
-    }
-
-    @Override
-    public List<RsArticleDto> findAllDtoByUserId(Long id, Pageable pageable) {
-        return articleRepository.findAllByUserId(id, pageable).stream()
+    public List<RsArticleDto> getAll(Pageable pageable) {
+        return articleRepository.findAll(pageable).getContent().stream()
                 .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RsArticleDto> findAllDto(Pageable pageable) {
-        return articleRepository.findAll(pageable).getContent().stream()
+    public Article findById(Long id) {
+        return articleRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public RsArticleDto getById(Long id) {
+        Article article = articleRepository.findById(id).orElse(null);
+        return ArticleMapper.INSTANCE.articleToRsArticleDto(article);
+    }
+
+    @Override
+    public List<RsArticleDto> getAllByUserId(Long id, Pageable pageable) {
+        return articleRepository.findAllByUserId(id, pageable).stream()
                 .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
                 .collect(Collectors.toList());
     }

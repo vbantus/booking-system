@@ -14,7 +14,7 @@ public interface BookingSpaceService {
 
     void deleteById(Long id);
 
-    List<RsBookingSpaceDto> findAll();
+    List<RsBookingSpaceDto> getAll();
 
     BookingSpace findById(Long id);
 

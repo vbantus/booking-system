@@ -14,8 +14,8 @@ public interface EventService {
 
     void deleteById(Long id);
 
-    List<RsEventDto> findAllDtoByUserId(Long userId);
+    List<RsEventDto> getAllByUserId(Long userId);
 
-    List<RsEventDto> findAll();
+    List<RsEventDto> getAll();
 
 }

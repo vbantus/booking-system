@@ -43,7 +43,7 @@ public class BookingSpaceController {
 
     @GetMapping
     public ResponseEntity<List<RsBookingSpaceDto>> getAll() {
-        return ResponseEntity.ok(bookingSpaceService.findAll());
+        return ResponseEntity.ok(bookingSpaceService.getAll());
     }
 
 }

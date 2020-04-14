@@ -40,9 +40,4 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/{commentId}")
-    public ResponseEntity<RsCommentDto> getById(@PathVariable("commentId") Long commentId) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.findDtoById(commentId));
-    }
-
 }

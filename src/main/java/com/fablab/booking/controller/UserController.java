@@ -6,8 +6,6 @@ import com.fablab.booking.dto.RsEventDto;
 import com.fablab.booking.service.ArticleService;
 import com.fablab.booking.service.BookingSpaceRelationService;
 import com.fablab.booking.service.EventService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -31,27 +29,27 @@ public class UserController {
 
     @GetMapping("/{userId}/events")
     public ResponseEntity<List<RsEventDto>> getAllEventsByUserId(@PathVariable("userId") Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(eventService.findAllDtoByUserId(userId));
+        return ResponseEntity.status(HttpStatus.OK).body(eventService.getAllByUserId(userId));
     }
 
     @GetMapping("/{userId}/articles")
     public ResponseEntity<List<RsArticleDto>> getAllArticlesByUserId(@PathVariable("userId") Long userId,
                                                                      @ApiIgnore Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(articleService.findAllDtoByUserId(userId, pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.getAllByUserId(userId, pageable));
     }
 
     @GetMapping("/{userId}/pending-bookings")
     public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllPendingBookingsByUserId(@PathVariable("userId") Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllPendingBookingsByUserId(userId));
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllPendingBookingsByUserId(userId));
     }
 
     @GetMapping("/{userId}/active-bookings")
     public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllActiveBookingsByUserId(@PathVariable("userId") Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllActiveBookingsByUserId(userId));
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllActiveBookingsByUserId(userId));
     }
 
     @GetMapping("/{userId}/expired-bookings")
     public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllExpiredBookingsByUserId(@PathVariable("userId") Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllExpiredBookingsByUserId(userId));
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllExpiredBookingsByUserId(userId));
     }
 }

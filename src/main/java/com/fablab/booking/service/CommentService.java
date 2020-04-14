@@ -14,8 +14,6 @@ public interface CommentService {
 
     void deleteById(Long id);
 
-    RsCommentDto findDtoById(Long id);
-
     List<RsCommentDto> findAllDtoByArticleId(Long id);
 
 }

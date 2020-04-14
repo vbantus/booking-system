@@ -37,7 +37,7 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
     }
 
     @Override
-    public List<RsBookingSpaceDto> findAll() {
+    public List<RsBookingSpaceDto> getAll() {
         return bookingSpaceRepository.findAll().stream()
                 .map(BookingSpaceMapper.INSTANCE::bookingSpaceToRsBookingSpaceDto)
                 .collect(Collectors.toList());

@@ -43,14 +43,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<RsEventDto> findAllDtoByUserId(Long userId) {
+    public List<RsEventDto> getAllByUserId(Long userId) {
         return eventRepository.findAllByUserId(userId).stream()
                 .map(EventMapper.INSTANCE::eventToRsEventDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<RsEventDto> findAll() {
+    public List<RsEventDto> getAll() {
         return eventRepository.findAll().stream()
                 .map(EventMapper.INSTANCE::eventToRsEventDto)
                 .collect(Collectors.toList());

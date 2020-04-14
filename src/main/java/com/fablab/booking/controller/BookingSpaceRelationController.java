@@ -42,24 +42,24 @@ public class BookingSpaceRelationController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<RsBookingSpaceRelationDto>> getAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAll());
+    }
+
     @GetMapping("/pending")
     public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllPendingBookings() {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllPendingBookings());
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllPendingBookings());
     }
 
     @GetMapping("/active")
     public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllActiveBookings() {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllActiveBookings());
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllActiveBookings());
     }
 
     @GetMapping("/expired")
     public ResponseEntity<List<RsBookingSpaceRelationDto>> getAllExpiredBookings() {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAllExpiredBookings());
-    }
-
-    @GetMapping
-    public ResponseEntity<List<RsBookingSpaceRelationDto>> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(bookingSpaceRelationService.getAllExpiredBookings());
     }
 
 }

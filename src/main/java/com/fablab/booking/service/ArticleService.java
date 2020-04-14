@@ -16,11 +16,11 @@ public interface ArticleService {
 
     void deleteById(Long id);
 
+    List<RsArticleDto> getAll(Pageable pageable);
+
     Article findById(Long id);
 
-    RsArticleDto findDtoById(Long id);
+    RsArticleDto getById(Long id);
 
-    List<RsArticleDto> findAllDtoByUserId(Long id, Pageable pageable);
-
-    List<RsArticleDto> findAllDto(Pageable pageable);
+    List<RsArticleDto> getAllByUserId(Long id, Pageable pageable);
 }

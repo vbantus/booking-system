@@ -44,13 +44,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public RsCommentDto findDtoById(Long id) {
-        // TODO ad exception for comment not found
-        Comment comment = commentRepository.findById(id).orElse(null);
-        return CommentMapper.INSTANCE.commentToRsCommentDto(comment);
-    }
-
-    @Override
     public List<RsCommentDto> findAllDtoByArticleId(Long id) {
         return commentRepository.findAllByArticleId(id).stream()
                 .map(CommentMapper.INSTANCE::commentToRsCommentDto)

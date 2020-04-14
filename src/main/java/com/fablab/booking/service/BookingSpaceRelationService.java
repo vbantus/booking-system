@@ -13,17 +13,17 @@ public interface BookingSpaceRelationService {
 
     void deleteById(Long id);
 
-    List<RsBookingSpaceRelationDto> findAllPendingBookings();
+    List<RsBookingSpaceRelationDto> getAll();
 
-    List<RsBookingSpaceRelationDto> findAllActiveBookings();
+    List<RsBookingSpaceRelationDto> getAllPendingBookings();
 
-    List<RsBookingSpaceRelationDto> findAllExpiredBookings();
+    List<RsBookingSpaceRelationDto> getAllActiveBookings();
 
-    List<RsBookingSpaceRelationDto> findAllPendingBookingsByUserId(Long userId);
+    List<RsBookingSpaceRelationDto> getAllExpiredBookings();
 
-    List<RsBookingSpaceRelationDto> findAllActiveBookingsByUserId(Long userId);
+    List<RsBookingSpaceRelationDto> getAllPendingBookingsByUserId(Long userId);
 
-    List<RsBookingSpaceRelationDto> findAllExpiredBookingsByUserId(Long userId);
+    List<RsBookingSpaceRelationDto> getAllActiveBookingsByUserId(Long userId);
 
-    List<RsBookingSpaceRelationDto> findAll();
+    List<RsBookingSpaceRelationDto> getAllExpiredBookingsByUserId(Long userId);
 }
