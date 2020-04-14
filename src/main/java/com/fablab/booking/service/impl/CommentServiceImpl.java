@@ -24,20 +24,6 @@ public class CommentServiceImpl implements CommentService {
     private final ArticleService articleService;
 
     @Override
-    public RsCommentDto findDtoById(Long id) {
-        // TODO ad exception for comment not found
-        Comment comment = commentRepository.findById(id).orElse(null);
-        return CommentMapper.INSTANCE.commentToRsCommentDto(comment);
-    }
-
-    @Override
-    public List<RsCommentDto> findAllDtoByArticleId(Long id) {
-        return commentRepository.findAllByArticleId(id).stream()
-                .map(CommentMapper.INSTANCE::commentToRsCommentDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public RsCommentDto save(RqCreateCommentDto rqCreateCommentDto) {
         Comment comment = CommentMapper.INSTANCE.rqCreateCommentDtoToComment(rqCreateCommentDto);
         Article article = articleService.findById(rqCreateCommentDto.getArticleId());
@@ -55,5 +41,19 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteById(Long id) {
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public RsCommentDto findDtoById(Long id) {
+        // TODO ad exception for comment not found
+        Comment comment = commentRepository.findById(id).orElse(null);
+        return CommentMapper.INSTANCE.commentToRsCommentDto(comment);
+    }
+
+    @Override
+    public List<RsCommentDto> findAllDtoByArticleId(Long id) {
+        return commentRepository.findAllByArticleId(id).stream()
+                .map(CommentMapper.INSTANCE::commentToRsCommentDto)
+                .collect(Collectors.toList());
     }
 }

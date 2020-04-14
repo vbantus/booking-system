@@ -23,6 +23,25 @@ public class ArticleServiceImpl implements ArticleService {
     private final UserService userService;
 
     @Override
+    public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto) {
+        Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
+        article.setUser(userService.findById(rqCreateArticleDto.getUserId()));
+        return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
+    }
+
+    @Override
+    public RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id) {
+        Article article = articleRepository.findById(id).orElse(null);
+        ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
+        return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        articleRepository.deleteById(id);
+    }
+
+    @Override
     public Article findById(Long id) {
         return articleRepository.findById(id).orElse(null);
     }
@@ -47,22 +66,4 @@ public class ArticleServiceImpl implements ArticleService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto) {
-        Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
-        article.setUser(userService.findById(rqCreateArticleDto.getUserId()));
-        return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
-    }
-
-    @Override
-    public RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id) {
-        Article article = articleRepository.findById(id).orElse(null);
-        ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
-        return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        articleRepository.deleteById(id);
-    }
 }

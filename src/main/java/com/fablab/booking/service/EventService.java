@@ -8,13 +8,14 @@ import java.util.List;
 
 public interface EventService {
 
-    List<RsEventDto> findAllDtoByUserId(Long userId);
-
-    List<RsEventDto> findAll();
-
     RsEventDto save(RqCreateEventDto rqCreateEventDto);
 
     RsEventDto update(RqUpdateEventDto rqUpdateEventDto, Long id);
 
     void deleteById(Long id);
+
+    List<RsEventDto> findAllDtoByUserId(Long userId);
+
+    List<RsEventDto> findAll();
+
 }

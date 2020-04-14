@@ -24,6 +24,34 @@ public class BookingSpaceRelationServiceImpl implements BookingSpaceRelationServ
     private final BookingSpaceService bookingSpaceService;
 
     @Override
+    public RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto) {
+        BookingSpaceRelation bookingSpaceRelation =
+                BookingSpaceRelationMapper.INSTANCE.rqBookingSpaceRelationDtoToBookingSpaceRelation(rqBookingSpaceRelationDto);
+
+        bookingSpaceRelation.setStatus(BookingStatus.CREATED);
+        bookingSpaceRelation.setUser(userService.findById(rqBookingSpaceRelationDto.getUserId()));
+        bookingSpaceRelation.setBookingSpace(bookingSpaceService.findById(rqBookingSpaceRelationDto.getBookingSpaceId()));
+
+        return BookingSpaceRelationMapper.INSTANCE
+                .bookingSpaceRelationToRsBookingSpaceRelationDto(bookingSpaceRelationRepository.save(bookingSpaceRelation));
+    }
+
+    @Override
+    public RsBookingSpaceRelationDto update(RqBookingSpaceRelationDto rqBookingSpaceRelationDto, Long id) {
+        BookingSpaceRelation bookingSpaceRelation = bookingSpaceRelationRepository.findById(id).get();
+        BookingSpaceRelationMapper.INSTANCE
+                .updateBookingSpaceRelationFromRqBookingSpaceRelationDto(rqBookingSpaceRelationDto, bookingSpaceRelation);
+
+        return BookingSpaceRelationMapper.INSTANCE
+                .bookingSpaceRelationToRsBookingSpaceRelationDto(bookingSpaceRelationRepository.save(bookingSpaceRelation));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        bookingSpaceRelationRepository.deleteById(id);
+    }
+
+    @Override
     public List<RsBookingSpaceRelationDto> findAllPendingBookings() {
         return bookingSpaceRelationRepository.findAllPendingBookings().stream()
                 .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
@@ -70,33 +98,5 @@ public class BookingSpaceRelationServiceImpl implements BookingSpaceRelationServ
         return bookingSpaceRelationRepository.findAll().stream()
                 .map(BookingSpaceRelationMapper.INSTANCE::bookingSpaceRelationToRsBookingSpaceRelationDto)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto) {
-        BookingSpaceRelation bookingSpaceRelation =
-                BookingSpaceRelationMapper.INSTANCE.rqBookingSpaceRelationDtoToBookingSpaceRelation(rqBookingSpaceRelationDto);
-
-        bookingSpaceRelation.setStatus(BookingStatus.CREATED);
-        bookingSpaceRelation.setUser(userService.findById(rqBookingSpaceRelationDto.getUserId()));
-        bookingSpaceRelation.setBookingSpace(bookingSpaceService.findById(rqBookingSpaceRelationDto.getBookingSpaceId()));
-
-        return BookingSpaceRelationMapper.INSTANCE
-                .bookingSpaceRelationToRsBookingSpaceRelationDto(bookingSpaceRelationRepository.save(bookingSpaceRelation));
-    }
-
-    @Override
-    public RsBookingSpaceRelationDto update(RqBookingSpaceRelationDto rqBookingSpaceRelationDto, Long id) {
-        BookingSpaceRelation bookingSpaceRelation = bookingSpaceRelationRepository.findById(id).get();
-        BookingSpaceRelationMapper.INSTANCE
-                .updateBookingSpaceRelationFromRqBookingSpaceRelationDto(rqBookingSpaceRelationDto, bookingSpaceRelation);
-
-        return BookingSpaceRelationMapper.INSTANCE
-                .bookingSpaceRelationToRsBookingSpaceRelationDto(bookingSpaceRelationRepository.save(bookingSpaceRelation));
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        bookingSpaceRelationRepository.deleteById(id);
     }
 }

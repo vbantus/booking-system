@@ -24,11 +24,6 @@ public class BookingSpaceController {
 
     private final BookingSpaceService bookingSpaceService;
 
-    @GetMapping
-    public ResponseEntity<List<RsBookingSpaceDto>> getAll() {
-        return ResponseEntity.ok(bookingSpaceService.findAll());
-    }
-
     @PostMapping
     public ResponseEntity<RsBookingSpaceDto> save(@RequestBody RqBookingSpaceDto rqBookingSpaceDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookingSpaceService.save(rqBookingSpaceDto));
@@ -36,7 +31,7 @@ public class BookingSpaceController {
 
     @PutMapping("/{bookingSpaceId}")
     public ResponseEntity<RsBookingSpaceDto> update(@PathVariable("bookingSpaceId") Long bookingSpaceId,
-                                               @RequestBody RqBookingSpaceDto rqBookingSpaceDto) {
+                                                    @RequestBody RqBookingSpaceDto rqBookingSpaceDto) {
         return ResponseEntity.ok(bookingSpaceService.update(rqBookingSpaceDto, bookingSpaceId));
     }
 
@@ -44,6 +39,11 @@ public class BookingSpaceController {
     public ResponseEntity<Void> deleteById(@PathVariable("bookingSpaceId") Long bookingSpaceId) {
         bookingSpaceService.deleteById(bookingSpaceId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RsBookingSpaceDto>> getAll() {
+        return ResponseEntity.ok(bookingSpaceService.findAll());
     }
 
 }

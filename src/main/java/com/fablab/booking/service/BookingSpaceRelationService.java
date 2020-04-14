@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface BookingSpaceRelationService {
 
+    RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto);
+
+    RsBookingSpaceRelationDto update(RqBookingSpaceRelationDto rqBookingSpaceRelationDto, Long id);
+
+    void deleteById(Long id);
+
     List<RsBookingSpaceRelationDto> findAllPendingBookings();
 
     List<RsBookingSpaceRelationDto> findAllActiveBookings();
@@ -20,10 +26,4 @@ public interface BookingSpaceRelationService {
     List<RsBookingSpaceRelationDto> findAllExpiredBookingsByUserId(Long userId);
 
     List<RsBookingSpaceRelationDto> findAll();
-
-    RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto);
-
-    RsBookingSpaceRelationDto update(RqBookingSpaceRelationDto rqBookingSpaceRelationDto, Long id);
-
-    void deleteById(Long id);
 }

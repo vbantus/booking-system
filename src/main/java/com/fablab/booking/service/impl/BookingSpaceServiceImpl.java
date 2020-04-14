@@ -19,18 +19,6 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
     private final BookingSpaceRepository bookingSpaceRepository;
 
     @Override
-    public List<RsBookingSpaceDto> findAll() {
-        return bookingSpaceRepository.findAll().stream()
-                .map(BookingSpaceMapper.INSTANCE::bookingSpaceToRsBookingSpaceDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public BookingSpace findById(Long id) {
-        return bookingSpaceRepository.findById(id).get();
-    }
-
-    @Override
     public RsBookingSpaceDto save(RqBookingSpaceDto rqBookingSpaceDto) {
         BookingSpace bookingSpace = BookingSpaceMapper.INSTANCE.rqCreateBookingSpaceDtoToBookingSpace(rqBookingSpaceDto);
         return BookingSpaceMapper.INSTANCE.bookingSpaceToRsBookingSpaceDto(bookingSpaceRepository.save(bookingSpace));
@@ -47,4 +35,17 @@ public class BookingSpaceServiceImpl implements BookingSpaceService {
     public void deleteById(Long id) {
         bookingSpaceRepository.deleteById(id);
     }
+
+    @Override
+    public List<RsBookingSpaceDto> findAll() {
+        return bookingSpaceRepository.findAll().stream()
+                .map(BookingSpaceMapper.INSTANCE::bookingSpaceToRsBookingSpaceDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BookingSpace findById(Long id) {
+        return bookingSpaceRepository.findById(id).get();
+    }
+
 }

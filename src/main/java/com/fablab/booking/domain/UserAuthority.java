@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,5 +22,6 @@ import javax.persistence.Table;
 @Table(name = "authorities")
 public class UserAuthority extends AbstractEntity {
     @Enumerated(EnumType.STRING)
+    @Column(unique=true)
     private UserRole role;
 }

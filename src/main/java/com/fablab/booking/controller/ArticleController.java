@@ -32,6 +32,23 @@ public class ArticleController {
     private final ArticleService articleService;
     private final CommentService commentService;
 
+    @PostMapping
+    public ResponseEntity<RsArticleDto> save(@RequestBody RqCreateArticleDto rqCreateArticleDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto));
+    }
+
+    @PutMapping("/{articleId}")
+    public ResponseEntity<RsArticleDto> update(@PathVariable("articleId") Long articleId,
+                                               @RequestBody RqUpdateArticleDto rqUpdateArticleDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.update(rqUpdateArticleDto, articleId));
+    }
+
+    @DeleteMapping("/{articleId}")
+    public ResponseEntity<Void> deleteById(@PathVariable("articleId") Long articleId) {
+        articleService.deleteById(articleId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @GetMapping("/{articleId}")
     public ResponseEntity<RsArticleDto> getById(@PathVariable("articleId") Long articleId) {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.findDtoById(articleId));
@@ -51,22 +68,5 @@ public class ArticleController {
     @GetMapping
     public ResponseEntity<List<RsArticleDto>> getAll(@ApiIgnore Pageable pageable) {
         return ResponseEntity.ok(articleService.findAllDto(pageable));
-    }
-
-    @PostMapping
-    public ResponseEntity<RsArticleDto> save(@RequestBody RqCreateArticleDto rqCreateArticleDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto));
-    }
-
-    @PutMapping("/{articleId}")
-    public ResponseEntity<RsArticleDto> update(@PathVariable("articleId") Long articleId,
-                                               @RequestBody RqUpdateArticleDto rqUpdateArticleDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(articleService.update(rqUpdateArticleDto, articleId));
-    }
-
-    @DeleteMapping("/{articleId}")
-    public ResponseEntity<Void> deleteById(@PathVariable("articleId") Long articleId) {
-        articleService.deleteById(articleId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

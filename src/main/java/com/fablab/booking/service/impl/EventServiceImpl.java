@@ -23,20 +23,6 @@ public class EventServiceImpl implements EventService {
     private final UserService userService;
 
     @Override
-    public List<RsEventDto> findAllDtoByUserId(Long userId) {
-        return eventRepository.findAllByUserId(userId).stream()
-                .map(EventMapper.INSTANCE::eventToRsEventDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<RsEventDto> findAll() {
-        return eventRepository.findAll().stream()
-                .map(EventMapper.INSTANCE::eventToRsEventDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public RsEventDto save(RqCreateEventDto rqCreateEventDto) {
         Event event = EventMapper.INSTANCE.rqCreateEventDtoToEvent(rqCreateEventDto);
         BookingUser user = userService.findById(rqCreateEventDto.getUserId());
@@ -54,5 +40,19 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteById(Long id) {
         eventRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RsEventDto> findAllDtoByUserId(Long userId) {
+        return eventRepository.findAllByUserId(userId).stream()
+                .map(EventMapper.INSTANCE::eventToRsEventDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsEventDto> findAll() {
+        return eventRepository.findAll().stream()
+                .map(EventMapper.INSTANCE::eventToRsEventDto)
+                .collect(Collectors.toList());
     }
 }
