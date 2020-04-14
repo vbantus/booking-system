@@ -1,12 +1,12 @@
 package com.fablab.booking.service;
 
-import com.fablab.booking.domain.BookingSpaceRelation;
+import com.fablab.booking.domain.RoomBooking;
 import com.fablab.booking.dto.RqBookingSpaceRelationDto;
 import com.fablab.booking.dto.RsBookingSpaceRelationDto;
 
 import java.util.List;
 
-public interface BookingSpaceRelationService {
+public interface RoomBookingService {
 
     RsBookingSpaceRelationDto save(RqBookingSpaceRelationDto rqBookingSpaceRelationDto);
 
@@ -28,5 +28,5 @@ public interface BookingSpaceRelationService {
 
     List<RsBookingSpaceRelationDto> getAllExpiredBookingsByUserId(Long userId);
 
-    BookingSpaceRelation findById(Long id);
+    RoomBooking findById(Long id);
 }

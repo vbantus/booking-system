@@ -1,6 +1,6 @@
 package com.fablab.booking.mapper;
 
-import com.fablab.booking.domain.BookingSpaceRelation;
+import com.fablab.booking.domain.RoomBooking;
 import com.fablab.booking.dto.RqBookingSpaceRelationDto;
 import com.fablab.booking.dto.RsBookingSpaceRelationDto;
 import org.mapstruct.Builder;
@@ -10,17 +10,17 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(builder = @Builder(disableBuilder = true))
-public interface BookingSpaceRelationMapper {
+public interface RoomBookingMapper {
 
-    BookingSpaceRelationMapper INSTANCE = Mappers.getMapper(BookingSpaceRelationMapper.class);
+    RoomBookingMapper INSTANCE = Mappers.getMapper(RoomBookingMapper.class);
 
-    BookingSpaceRelation rqBookingSpaceRelationDtoToBookingSpaceRelation(RqBookingSpaceRelationDto rqBookingSpaceRelationDto);
+    RoomBooking rqBookingSpaceRelationDtoToBookingSpaceRelation(RqBookingSpaceRelationDto rqBookingSpaceRelationDto);
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "bookingSpace.id", target = "bookingSpaceId")
-    RsBookingSpaceRelationDto bookingSpaceRelationToRsBookingSpaceRelationDto(BookingSpaceRelation bookingSpaceRelation);
+    RsBookingSpaceRelationDto bookingSpaceRelationToRsBookingSpaceRelationDto(RoomBooking roomBooking);
 
     void updateBookingSpaceRelationFromRqBookingSpaceRelationDto(RqBookingSpaceRelationDto rqBookingSpaceRelationDto,
-                                                                 @MappingTarget BookingSpaceRelation bookingSpaceRelation);
+                                                                 @MappingTarget RoomBooking roomBooking);
 
 }

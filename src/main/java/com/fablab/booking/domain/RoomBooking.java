@@ -22,8 +22,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "booking_space_relations")
-public class BookingSpaceRelation extends AbstractEntity{
+@Table(name = "rooms_booking")
+public class RoomBooking extends AbstractEntity{
     private Date startBookingTime;
     private Date endBookingTime;
     @Enumerated(EnumType.STRING)
