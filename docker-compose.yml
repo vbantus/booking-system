@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  postgres-db:
+    image: postgres
+    restart: always
+    environment:
+    - POSTGRES_DB=booking
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=password
+    ports:
+    - 5434:5432
+  app:
+    build: .
+    environment:
+    - _JAVA_OPTIONS=-Xmx512m -Xms256m
+    - SPRING_DATASOURCE_USERNAME=postgres
+    - SPRING_DATASOURCE_PASSWORD=password
+    - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/booking
+    - APP_SLEEP=10
+    ports:
+    - 8084:8080
