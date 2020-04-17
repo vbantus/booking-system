@@ -16,6 +16,7 @@ services:
     - SPRING_DATASOURCE_USERNAME=postgres
     - SPRING_DATASOURCE_PASSWORD=password
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/booking
-    - APP_SLEEP=10
     ports:
     - 8084:8080
+    depends_on:
+      - postgres-db
