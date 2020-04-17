@@ -2,13 +2,22 @@ package com.fablab.booking.service;
 
 import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.dto.RqRegisterUserDto;
+import com.fablab.booking.dto.RqUpdateUserDto;
 import com.fablab.booking.dto.RsUserDto;
+
+import java.util.List;
 
 public interface UserService {
 
     RsUserDto save(RqRegisterUserDto rqRegisterUserDto);
 
-    BookingUser findById(Long id);
+    RsUserDto update(RqUpdateUserDto rqUpdateUserDto, Long id);
 
-    BookingUser findByUsername(String username);
+    void deleteById(Long id);
+
+    List<RsUserDto> getAll();
+
+    RsUserDto findByUsername(String username);
+
+    BookingUser findById(Long id);
 }
