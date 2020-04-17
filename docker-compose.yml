@@ -2,6 +2,7 @@ version: '3.1'
 services:
   postgres-db:
     image: postgres
+    container_name: postgres-db
     restart: always
     environment:
     - POSTGRES_DB=booking
@@ -9,8 +10,10 @@ services:
     - POSTGRES_PASSWORD=password
     ports:
     - 5434:5432
-  app:
+  booking-app:
+    image: booking-app
     build: .
+    container_name: booking-app
     environment:
     - _JAVA_OPTIONS=-Xmx512m -Xms256m
     - SPRING_DATASOURCE_USERNAME=postgres

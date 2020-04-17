@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/booking/api/test")
 public class IndexController {
 

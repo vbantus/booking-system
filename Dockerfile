@@ -1,19 +1,17 @@
-# For Java 8, try this
-# FROM openjdk:8-jdk-alpine
+#For maven
+FROM maven:3-jdk-11-slim AS MAVEN_BUILD
 
-# For Java 11, try this
-FROM adoptopenjdk/openjdk11:alpine-jre
+# cd /build
+WORKDIR /build
+COPY pom.xml /build/
+COPY src /build/src/
+RUN mvn clean install -DskipTests
 
-# Refer to Maven build -> finalName
-ARG JAR_FILE=target/booking-0.0.1-SNAPSHOT.jar
-
-# cd /opt/app
-WORKDIR /opt/app
-
+# For Java 11
+FROM openjdk:11-slim
+# cd /app
+WORKDIR /app
+COPY --from=MAVEN_BUILD /build/target/booking-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# cp target/spring-boot-web.jar /opt/app/app.jar
-COPY ${JAR_FILE} app.jar
-
-# java -jar /opt/app/app.jar
+# java -jar /app/app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
