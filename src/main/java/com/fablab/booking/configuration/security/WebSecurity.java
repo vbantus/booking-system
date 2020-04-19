@@ -30,7 +30,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui.html/**").permitAll()
-                .antMatchers("/booking/api/auth/**").permitAll()
+                .antMatchers("/booking/auth/**").permitAll()
                 .anyRequest().permitAll()//.authenticated()
                 .and().exceptionHandling()
                 //.and().formLogin()
