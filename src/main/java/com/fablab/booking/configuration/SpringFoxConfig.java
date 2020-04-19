@@ -1,5 +1,6 @@
 package com.fablab.booking.configuration;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,6 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class SpringFoxConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.regex("/booking/.*"))
                 .build()
                 .apiInfo(getApiInfo())
                 .securitySchemes(Lists.newArrayList(apiKey()))
@@ -49,7 +49,7 @@ public class SpringFoxConfig {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex("/booking/.*"))
+                .forPaths(Predicates.not(PathSelectors.regex("/booking/auth.*")))
                 .build();
     }
 
