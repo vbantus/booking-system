@@ -1,10 +1,14 @@
 package com.fablab.booking.configuration.security;
 
+import com.fablab.booking.configuration.security.JwtAuthFilter;
 import com.fablab.booking.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,9 +33,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         //TODO add handlers
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/v2/api-docs",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html**",
+                        "/webjars/**",
+                        "favicon.ico"
+                ).permitAll()
                 .antMatchers("/swagger-ui.html/**").permitAll()
                 .antMatchers("/booking/auth/**").permitAll()
-                .anyRequest().permitAll()//.authenticated()
+                .anyRequest().authenticated()
                 .and().exceptionHandling()
                 //.and().formLogin()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
