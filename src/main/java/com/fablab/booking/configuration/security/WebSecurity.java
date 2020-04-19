@@ -4,6 +4,7 @@ import com.fablab.booking.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,9 +30,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         //TODO add handlers
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/v2/api-docs",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html**",
+                        "/webjars/**",
+                        "favicon.ico"
+                ).permitAll()
                 .antMatchers("/swagger-ui.html/**").permitAll()
-                .antMatchers("/booking/api/auth/**").permitAll()
-                .anyRequest().permitAll()//.authenticated()
+                .antMatchers("/booking/auth/**").permitAll()
+                .anyRequest().authenticated()
                 .and().exceptionHandling()
                 //.and().formLogin()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

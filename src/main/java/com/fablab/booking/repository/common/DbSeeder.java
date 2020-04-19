@@ -7,6 +7,7 @@ import com.fablab.booking.repository.UserAuthorityRepository;
 import com.fablab.booking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -18,6 +19,7 @@ public class DbSeeder implements CommandLineRunner {
 
     private final UserAuthorityRepository userAuthorityRepository;
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,14 +39,16 @@ public class DbSeeder implements CommandLineRunner {
 
         BookingUser simpleUser = BookingUser.builder()
                 .username("user")
-                .password("user")
+                .password(passwordEncoder.encode("user"))
+                .enabled(true)
                 .email("user@gmail.com")
                 .authorities(Set.of(userAuthority))
                 .build();
 
         BookingUser adminUser = BookingUser.builder()
                 .username("admin")
-                .password("admin")
+                .password(passwordEncoder.encode("admin"))
+                .enabled(true)
                 .email("admin@gmail.com")
                 .authorities(Set.of(adminAuthority))
                 .build();
