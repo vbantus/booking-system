@@ -27,7 +27,7 @@ class RoomServiceImplTest {
     private RoomServiceImpl roomService;
 
     @Test
-    void getAll() {
+    void testGetAll() {
         Room room = Room.builder()
                 .name("roomName")
                 .description("roomDescription")
