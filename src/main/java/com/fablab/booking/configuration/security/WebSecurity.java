@@ -38,11 +38,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "favicon.ico"
                 ).permitAll()
-                .antMatchers("/swagger-ui.html/**").permitAll()
                 .antMatchers("/booking/auth/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/booking/article").permitAll()
+                .antMatchers(HttpMethod.GET, "/booking/event").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
-                //.and().formLogin()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     }
