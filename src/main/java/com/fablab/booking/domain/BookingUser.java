@@ -1,5 +1,6 @@
 package com.fablab.booking.domain;
 
+import com.fablab.booking.domain.common.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -22,15 +25,12 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "users")
-public class BookingUser extends AbstractEntity{
+public class BookingUser extends AbstractEntity {
     @Column(unique = true, nullable = false)
     private String username;
     private String password;
     private Boolean enabled;
     private String email;
-    @ManyToMany
-    @JoinTable(name = "user_authority",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "authority_id") })
-    private Set<UserAuthority> authorities = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 }

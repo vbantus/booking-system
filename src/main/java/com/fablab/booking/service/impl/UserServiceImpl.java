@@ -1,6 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingUser;
+import com.fablab.booking.domain.common.UserRole;
 import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqRegisterUserDto;
 import com.fablab.booking.dto.RqUpdateUserDto;
@@ -25,7 +26,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public RsUserDto save(RqRegisterUserDto rqRegisterUserDto) {
         BookingUser user = UserMapper.INSTANCE.rqRegisterUserDtoToUser(rqRegisterUserDto);
+        //TODO use mapper
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(UserRole.ROLE_USER);
+        user.setEnabled(true);
         return UserMapper.INSTANCE.userToRsUserDto(userRepository.save(user));
     }
 
