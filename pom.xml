@@ -42,6 +42,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!--TODO delete unused dependency-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -105,6 +106,19 @@
             <artifactId>springfox-bean-validators</artifactId>
             <version>${org.swagger.version}</version>
         </dependency>
+
+<!--        version 7+ has needed putObject method as protected one-->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>6.0.5</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>com.jlefebure</groupId>-->
+<!--            <artifactId>spring-boot-starter-minio</artifactId>-->
+<!--            <version>1.1</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 

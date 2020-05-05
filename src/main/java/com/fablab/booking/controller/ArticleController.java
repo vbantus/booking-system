@@ -6,6 +6,7 @@ import com.fablab.booking.dto.RsArticleDto;
 import com.fablab.booking.dto.RsCommentDto;
 import com.fablab.booking.service.ArticleService;
 import com.fablab.booking.service.CommentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,10 +35,26 @@ public class ArticleController {
 
     private final ArticleService articleService;
     private final CommentService commentService;
+    private final ObjectMapper objectMapper;
 
+//    @PostMapping
+//    public ResponseEntity<RsArticleDto> save(@RequestBody RqCreateArticleDto rqCreateArticleDto) {
+//        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto));
+//    }
+
+    @ApiImplicitParam(name = "articleDto", dataType = "string", paramType = "query",
+            value = "article string json representation",
+            defaultValue = "{\n" +
+                    "  \"content\": \"cool content\",\n" +
+                    "  \"title\": \"awesome title\",\n" +
+                    "  \"userId\": 1\n" +
+                    "}")
     @PostMapping
-    public ResponseEntity<RsArticleDto> save(@RequestBody RqCreateArticleDto rqCreateArticleDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto));
+    public ResponseEntity<RsArticleDto> save(@RequestParam(value = "titleImage", required = false) MultipartFile titleImage,
+                                             @RequestParam(value = "contentImage", required = false) MultipartFile contentImage,
+                                             @RequestParam(value = "articleDto", required = false) String articleDto) throws IOException {
+        RqCreateArticleDto rqCreateArticleDto = objectMapper.readValue(articleDto, RqCreateArticleDto.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto, titleImage, contentImage));
     }
 
     @PutMapping("/{articleId}")

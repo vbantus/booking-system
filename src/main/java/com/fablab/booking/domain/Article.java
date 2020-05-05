@@ -30,6 +30,8 @@ public class Article extends AbstractEntity {
     private String title;
     @NotNull
     private String content;
+    private String titleImageUrl;
+    private String contentImageUrl;
     @OneToMany(
             mappedBy = "article",
             cascade = CascadeType.ALL,
