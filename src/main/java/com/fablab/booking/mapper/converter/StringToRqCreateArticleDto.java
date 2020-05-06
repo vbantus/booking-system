@@ -1,6 +1,6 @@
 package com.fablab.booking.mapper.converter;
 
-import com.fablab.booking.dto.TestDto;
+import com.fablab.booking.dto.RqCreateArticleDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class StringToTestConverter implements Converter<String, TestDto> {
+public class StringToRqCreateArticleDto implements Converter<String, RqCreateArticleDto> {
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Override
     @SneakyThrows
-    public TestDto convert(String source) {
-        return objectMapper.readValue(source, TestDto.class);
+    public RqCreateArticleDto convert(String source) {
+        return objectMapper.readValue(source, RqCreateArticleDto.class);
     }
 }

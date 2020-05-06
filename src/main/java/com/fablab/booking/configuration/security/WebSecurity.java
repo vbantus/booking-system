@@ -41,7 +41,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/booking/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/booking/article").permitAll()
                 .antMatchers(HttpMethod.GET, "/booking/event").permitAll()
-                .anyRequest().permitAll()//.authenticated()
+                .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

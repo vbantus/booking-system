@@ -1,5 +1,6 @@
 package com.fablab.booking.controller;
 
+import com.fablab.booking.dto.RqCreateArticleDto;
 import com.fablab.booking.dto.TestDto;
 import com.fablab.booking.repository.RoomBookingRepository;
 import com.fablab.booking.repository.UserRepository;
@@ -48,6 +49,11 @@ public class IndexController {
     public ResponseEntity<String> hi() {
         roomBookingRepository.findAllActiveBookings();
         return ResponseEntity.status(HttpStatus.OK).body("hi there");
+    }
+
+    @PostMapping(value = "/article", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<RqCreateArticleDto> testArticle(RqCreateArticleDto rqCreateArticleDto){
+        return ResponseEntity.ok(rqCreateArticleDto);
     }
 
 
