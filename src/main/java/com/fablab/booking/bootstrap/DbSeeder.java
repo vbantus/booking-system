@@ -1,4 +1,4 @@
-package com.fablab.booking.repository.common;
+package com.fablab.booking.bootstrap;
 
 import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.domain.common.UserRole;

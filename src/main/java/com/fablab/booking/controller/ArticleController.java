@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -32,9 +34,16 @@ public class ArticleController {
     private final ArticleService articleService;
     private final CommentService commentService;
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", defaultValue = "cool title"),
+            @ApiImplicitParam(name = "content", dataType = "string", paramType = "query", defaultValue = "awesome content"),
+            @ApiImplicitParam(name = "userId", dataType = "integer", paramType = "query", defaultValue = "1")
+    })
     @PostMapping
-    public ResponseEntity<RsArticleDto> save(@RequestBody RqCreateArticleDto rqCreateArticleDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto));
+    public ResponseEntity<RsArticleDto> save(@RequestParam(value = "titleImage", required = false) MultipartFile titleImage,
+                                             @RequestParam(value = "contentImage", required = false) MultipartFile contentImage,
+                                             RqCreateArticleDto rqCreateArticleDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto, titleImage, contentImage));
     }
 
     @PutMapping("/{articleId}")

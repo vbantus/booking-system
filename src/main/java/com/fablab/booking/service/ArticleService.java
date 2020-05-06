@@ -5,12 +5,13 @@ import com.fablab.booking.dto.RqCreateArticleDto;
 import com.fablab.booking.dto.RqUpdateArticleDto;
 import com.fablab.booking.dto.RsArticleDto;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface ArticleService {
 
-    RsArticleDto save(RqCreateArticleDto rqCreateArticleDto);
+    RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile titleImage, MultipartFile contentImage);
 
     RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id);
 
