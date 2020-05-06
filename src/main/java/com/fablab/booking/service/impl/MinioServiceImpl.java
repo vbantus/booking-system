@@ -14,8 +14,8 @@ public class MinioServiceImpl implements MinioService {
     @Autowired
     private MinioClient minioClient;
 
-    @Value("${minio.url}")
-    private String minioUrl;
+    @Value("${minio.image.url}")
+    private String minioImageUrl;
 
     @Override
     public void createBucket(String bucketName) {
@@ -57,7 +57,7 @@ public class MinioServiceImpl implements MinioService {
                 "    ],\n" +
                 "    \"Version\": \"2012-10-17\"\n" +
                 "}";
-        
+
         try {
             minioClient.setBucketPolicy(bucketName, String.format(readOnlyPolicy, bucketName, bucketName));
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class MinioServiceImpl implements MinioService {
             throw new RuntimeException(e.getMessage());
         }
 
-        return minioUrl + "/" + bucketname + "/" + name;
+        return minioImageUrl + "/" + bucketname + "/" + name;
     }
 
 }

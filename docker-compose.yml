@@ -1,25 +1,44 @@
 version: '3.1'
+
 services:
+
   postgres-db:
     image: postgres
     container_name: postgres-db
-    restart: always
+    restart: on-failure
     environment:
     - POSTGRES_DB=booking
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=password
     ports:
     - 5434:5432
+
+  minio-storage:
+    image: minio/minio
+    container_name: minio-storage
+    restart: on-failure
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    ports:
+      - 9004:9000
+    command: server /data
+
   booking-app:
     image: booking-app
     build: .
     container_name: booking-app
+    restart: on-failure
     environment:
     - _JAVA_OPTIONS=-Xmx512m -Xms256m
     - SPRING_DATASOURCE_USERNAME=postgres
     - SPRING_DATASOURCE_PASSWORD=password
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/booking
+    - MINIO_URL=http://minio-storage:9000
+    #need this property to be able to access images from minIO when running with docker
+    - MINIO_IMAGE_URL=http://localhost:9004
     ports:
     - 8084:8080
     depends_on:
       - postgres-db
+      - minio-storage
