@@ -34,11 +34,6 @@ public class ArticleController {
     private final ArticleService articleService;
     private final CommentService commentService;
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", defaultValue = "cool title"),
-            @ApiImplicitParam(name = "content", dataType = "string", paramType = "query", defaultValue = "awesome content"),
-            @ApiImplicitParam(name = "userId", dataType = "integer", paramType = "query", defaultValue = "1")
-    })
     @PostMapping
     public ResponseEntity<RsArticleDto> save(@RequestParam(value = "titleImage", required = false) MultipartFile titleImage,
                                              @RequestParam(value = "contentImage", required = false) MultipartFile contentImage,
