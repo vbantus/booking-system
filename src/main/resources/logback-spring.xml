@@ -2,17 +2,17 @@
 <configuration>
 
     <property scope="context" name="CONSOLE_LOG_PATTERN"
-              value="%black(%d{HH:mm:ss.SSS}) %highlight(%-5level) [%blue(%t)] %yellow(%logger{35}) - %msg%n"/>
+              value="%black(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%blue(%t)] %yellow(%logger{35}.%M) - %msg%n"/>
     <property scope="context" name="FILE_LOG_PATTERN"
-              value="%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level [%thread] %logger{35} - %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{35}.%M - %msg%n"/>
 
     <property scope="context" name="LOG_DIR" value="/booking-system/logs"/>
     <property scope="context" name="LOG_FILE" value="booking-app"/>
-
     <property scope="context" name="FILE_EXTENSION" value="log"/>
+
     <property scope="context" name="MAX_HISTORY" value="10"/>
     <property scope="context" name="MAX_FILE_SIZE" value="10MB"/>
-    <property scope="context" name="TOTAL_FILE_SIZE" value="15GB"/>
+    <property scope="context" name="TOTAL_FILE_SIZE" value="2GB"/>
 
 
     <appender name="consoleAudit" class="ch.qos.logback.core.ConsoleAppender">
