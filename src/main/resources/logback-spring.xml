@@ -36,6 +36,16 @@
         </encoder>
     </appender>
 
+    <!--displaying query in log file -->
+    <!--    <logger name="org.hibernate.SQL" level="debug" additivity="false">-->
+<!--        <appender-ref ref="fileAudit"/>-->
+<!--    </logger>-->
+
+    <!--show query param in log file-->
+    <!--    <logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">-->
+<!--        <appender-ref ref="fileAudit"/>-->
+<!--    </logger>-->
+
     <root level="INFO">
         <appender-ref ref="consoleAudit"/>
         <appender-ref ref="fileAudit"/>
