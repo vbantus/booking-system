@@ -11,6 +11,7 @@ import com.fablab.booking.repository.EventRepository;
 import com.fablab.booking.service.EventService;
 import com.fablab.booking.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,8 +52,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<RsEventDto> getAll() {
-        return eventRepository.findAll().stream()
+    public List<RsEventDto> getAll(Pageable pageable) {
+        return eventRepository.findAll(pageable).stream()
                 .map(EventMapper.INSTANCE::eventToRsEventDto)
                 .collect(Collectors.toList());
     }

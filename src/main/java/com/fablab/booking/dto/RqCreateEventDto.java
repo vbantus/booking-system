@@ -12,8 +12,6 @@ public class RqCreateEventDto {
     private String description;
     private String location;
     private int participationFee;
-    private String imagePath;
-    private int entryCost;
     private Date startTime;
     private Date endTime;
     private Long userId;

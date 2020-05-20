@@ -55,9 +55,9 @@ public class ArticleController {
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
-                    value = "Results page you want to retrieve (0..N)"),
+                    value = "Results page you want to retrieve (0..N)", defaultValue = "0"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-                    value = "Number of records per page.")
+                    value = "Number of records per page.", defaultValue = "20")
     })
     @GetMapping
     public ResponseEntity<List<RsArticleDto>> getAll(@ApiIgnore Pageable pageable) {

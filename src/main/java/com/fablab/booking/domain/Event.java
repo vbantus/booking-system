@@ -26,8 +26,7 @@ public class Event extends AbstractEntity {
     private String description;
     private String location;
     private int participationFee;
-    private String imagePath;
-    private int entryCost;
+    private String imageUrl;
     private Date startTime;
     private Date endTime;
     @ManyToOne(

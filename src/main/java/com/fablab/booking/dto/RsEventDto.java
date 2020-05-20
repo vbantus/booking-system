@@ -12,8 +12,7 @@ public class RsEventDto extends AbstractResponseEntityDto {
     private String description;
     private String location;
     private int participationFee;
-    private String imagePath;
-    private int entryCost;
+    private String imageUrl;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
