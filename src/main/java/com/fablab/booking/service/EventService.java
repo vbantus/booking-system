@@ -13,7 +13,7 @@ public interface EventService {
 
     RsEventDto save(MultipartFile image, RqCreateEventDto rqCreateEventDto);
 
-    RsEventDto update(RqUpdateEventDto rqUpdateEventDto, Long id);
+    RsEventDto update(Long id, MultipartFile image, RqUpdateEventDto rqUpdateEventDto);
 
     void deleteById(Long id);
 

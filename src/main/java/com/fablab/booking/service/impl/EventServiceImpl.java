@@ -41,10 +41,13 @@ public class EventServiceImpl implements EventService {
         return EventMapper.INSTANCE.eventToRsEventDto(eventRepository.save(event));
     }
 
+    //TODO delete unused image
     @Override
-    public RsEventDto update(RqUpdateEventDto rqUpdateEventDto, Long id) {
+    public RsEventDto update(Long id, MultipartFile image, RqUpdateEventDto rqUpdateEventDto) {
         Event event = eventRepository.findById(id).get();
+        String imageUrl = minioService.saveImage(image, eventBucket);
         EventMapper.INSTANCE.updateEventFromRqUpdateEventDto(rqUpdateEventDto, event);
+        event.setImageUrl(imageUrl);
         return EventMapper.INSTANCE.eventToRsEventDto(eventRepository.save(event));
     }
 

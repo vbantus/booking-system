@@ -31,8 +31,9 @@ public class EventController {
 
     @PutMapping("/{eventId}")
     public ResponseEntity<RsEventDto> update(@PathVariable("eventId") Long eventId,
-                                             @RequestBody RqUpdateEventDto rqUpdateEventDto) {
-        return ResponseEntity.ok(eventService.update(rqUpdateEventDto, eventId));
+                                             @RequestParam(value = "image", required = false) MultipartFile image,
+                                             RqUpdateEventDto rqUpdateEventDto) {
+        return ResponseEntity.ok(eventService.update(eventId, image, rqUpdateEventDto));
     }
 
     @DeleteMapping("/{eventId}")
