@@ -20,6 +20,7 @@ public interface CommentMapper {
     Comment rqUpdateCommentDtoToComment(RqUpdateCommentDto rqUpdateCommentDto);
 
     @Mapping(source = "article.id", target = "articleId")
+    @Mapping(source = "user.username", target = "postedBy")
     RsCommentDto commentToRsCommentDto(Comment comment);
 
     void updateCommentFromRqUpdateCommentDto(RqUpdateCommentDto rqUpdateCommentDto, @MappingTarget Comment comment);

@@ -30,4 +30,9 @@ public class Comment extends AbstractEntity {
     )
     @JoinColumn(name = "article_id")
     private Article article;
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "user_id")
+    private BookingUser user;
 }

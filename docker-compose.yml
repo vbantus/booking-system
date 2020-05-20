@@ -39,6 +39,8 @@ services:
     - MINIO_IMAGE_URL=http://localhost:9004
     ports:
     - 8084:8080
+#    volumes:
+#      - E:\booking-system\logs2:/booking-system/logs
     depends_on:
       - postgres-db
       - minio-storage

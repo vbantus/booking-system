@@ -10,8 +10,8 @@ import com.fablab.booking.mapper.CommentMapper;
 import com.fablab.booking.repository.CommentRepository;
 import com.fablab.booking.service.ArticleService;
 import com.fablab.booking.service.CommentService;
+import com.fablab.booking.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +23,15 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final ArticleService articleService;
+    private final UserService userService;
 
     @Override
     public RsCommentDto save(RqCreateCommentDto rqCreateCommentDto) {
         Comment comment = CommentMapper.INSTANCE.rqCreateCommentDtoToComment(rqCreateCommentDto);
+        comment.setUser(userService.findById(rqCreateCommentDto.getUserId()));
         Article article = articleService.findById(rqCreateCommentDto.getArticleId());
         article.addComment(comment);
+
         return CommentMapper.INSTANCE.commentToRsCommentDto(commentRepository.save(comment));
     }
 
