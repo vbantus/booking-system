@@ -84,6 +84,11 @@ public class ArticleServiceImpl implements ArticleService {
                 .orElseThrow(() -> new EntityNotFoundException("article not found by id: " + id));
     }
 
+    @Override
+    public Long count() {
+        return articleRepository.count();
+    }
+
     private String saveImage(MultipartFile multipartFile) {
 
         if (multipartFile != null) {

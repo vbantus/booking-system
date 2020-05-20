@@ -69,8 +69,14 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.getById(articleId));
     }
 
-    @GetMapping("/{articleId}/comments")
-    public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllByArticleId(articleId));
+//    @GetMapping("/{articleId}/comments")
+//    public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
+//        return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllByArticleId(articleId));
+//    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getNumberOfArticles() {
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.count());
     }
+
 }
