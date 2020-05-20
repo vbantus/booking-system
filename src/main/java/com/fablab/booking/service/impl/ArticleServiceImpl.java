@@ -34,14 +34,12 @@ public class ArticleServiceImpl implements ArticleService {
     private final MinioService minioService;
 
     @Override
-    public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile titleImage, MultipartFile contentImage) {
-        String titleImageUrl = saveImage(titleImage);
-        String contentImageUrl = saveImage(contentImage);
+    public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile image) {
+        String titleImageUrl = saveImage(image);
 
         Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
         article.setUser(userService.findById(rqCreateArticleDto.getUserId()));
-        article.setTitleImageUrl(titleImageUrl);
-        article.setContentImageUrl(contentImageUrl);
+        article.setImageUrl(titleImageUrl);
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 

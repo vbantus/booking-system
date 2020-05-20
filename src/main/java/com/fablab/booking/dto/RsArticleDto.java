@@ -9,7 +9,6 @@ public class RsArticleDto extends AbstractResponseEntityDto {
     private String title;
     private String content;
     private Long userId;
-    private String titleImageUrl;
-    private String contentImageUrl;
+    private String imageUrl;
     private List<RsCommentDto> commentDtos;
 }

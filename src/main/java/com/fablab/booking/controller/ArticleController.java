@@ -35,10 +35,9 @@ public class ArticleController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<RsArticleDto> save(@RequestParam(value = "titleImage", required = false) MultipartFile titleImage,
-                                             @RequestParam(value = "contentImage", required = false) MultipartFile contentImage,
+    public ResponseEntity<RsArticleDto> save(@RequestParam(value = "image", required = false) MultipartFile image,
                                              RqCreateArticleDto rqCreateArticleDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto, titleImage, contentImage));
+        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto, image));
     }
 
     @PutMapping("/{articleId}")
