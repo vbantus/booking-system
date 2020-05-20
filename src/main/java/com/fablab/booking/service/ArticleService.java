@@ -13,7 +13,7 @@ public interface ArticleService {
 
     RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile image);
 
-    RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id);
+    RsArticleDto update(Long id, MultipartFile image, RqUpdateArticleDto rqUpdateArticleDto);
 
     void deleteById(Long id);
 

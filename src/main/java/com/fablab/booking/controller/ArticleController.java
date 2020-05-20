@@ -42,8 +42,9 @@ public class ArticleController {
 
     @PutMapping("/{articleId}")
     public ResponseEntity<RsArticleDto> update(@PathVariable("articleId") Long articleId,
-                                               @RequestBody RqUpdateArticleDto rqUpdateArticleDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(articleService.update(rqUpdateArticleDto, articleId));
+                                               @RequestParam(value = "image", required = false) MultipartFile image,
+                                               RqUpdateArticleDto rqUpdateArticleDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.update(articleId, image, rqUpdateArticleDto));
     }
 
     @DeleteMapping("/{articleId}")

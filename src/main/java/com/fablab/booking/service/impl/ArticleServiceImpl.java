@@ -35,18 +35,21 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile image) {
-        String titleImageUrl = saveImage(image);
+        String imageUrl = saveImage(image);
 
         Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
         article.setUser(userService.findById(rqCreateArticleDto.getUserId()));
-        article.setImageUrl(titleImageUrl);
+        article.setImageUrl(imageUrl);
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 
+    //TODO delete unused image
     @Override
-    public RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id) {
+    public RsArticleDto update(Long id, MultipartFile image, RqUpdateArticleDto rqUpdateArticleDto) {
         Article article = findById(id);
+        String imageUrl = saveImage(image);
         ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
+        article.setImageUrl(imageUrl);
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 
