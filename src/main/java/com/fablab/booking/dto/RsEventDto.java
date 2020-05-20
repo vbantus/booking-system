@@ -1,5 +1,6 @@
 package com.fablab.booking.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.Duration;
@@ -13,8 +14,9 @@ public class RsEventDto extends AbstractResponseEntityDto {
     private int participationFee;
     private String imagePath;
     private int entryCost;
-    private Long eventId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
     private Long userId;
 }

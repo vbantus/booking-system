@@ -36,14 +36,14 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<RsArticleDto> save(@RequestParam(value = "image", required = false) MultipartFile image,
-                                             RqCreateArticleDto rqCreateArticleDto) {
+                                             @RequestParam(value = "article") RqCreateArticleDto rqCreateArticleDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto, image));
     }
 
     @PutMapping("/{articleId}")
     public ResponseEntity<RsArticleDto> update(@PathVariable("articleId") Long articleId,
                                                @RequestParam(value = "image", required = false) MultipartFile image,
-                                               RqUpdateArticleDto rqUpdateArticleDto) {
+                                               @RequestParam(value = "article") RqUpdateArticleDto rqUpdateArticleDto) {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.update(articleId, image, rqUpdateArticleDto));
     }
 

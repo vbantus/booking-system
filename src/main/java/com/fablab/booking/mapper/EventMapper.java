@@ -17,7 +17,6 @@ public interface EventMapper {
 
     Event rqCreateEventDtoToEvent(RqCreateEventDto rqCreateEventDto);
 
-    @Mapping(source = "event.id", target = "eventId")
     @Mapping(source = "event.user.id", target = "userId")
     RsEventDto eventToRsEventDto(Event event);
 
