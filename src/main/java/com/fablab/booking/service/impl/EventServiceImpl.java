@@ -58,8 +58,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public RsEventDto getById(Long id) {
+        Event event = findById(id);
+        return EventMapper.INSTANCE.eventToRsEventDto(event);
+    }
+
+    @Override
     public Event findById(Long id) {
         return eventRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("user not found by id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("event not found by id: " + id));
     }
 }

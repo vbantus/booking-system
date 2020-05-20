@@ -19,5 +19,7 @@ public interface EventService {
 
     List<RsEventDto> getAll();
 
+    RsEventDto getById(Long id);
+
     Event findById(Long id);
 }

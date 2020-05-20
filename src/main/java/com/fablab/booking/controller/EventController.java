@@ -47,4 +47,9 @@ public class EventController {
         return ResponseEntity.ok(eventService.getAll());
     }
 
+    @GetMapping("/{eventId}")
+    public ResponseEntity<RsEventDto> getById(@PathVariable("eventId") Long eventId) {
+        return ResponseEntity.status(HttpStatus.OK).body(eventService.getById(eventId));
+    }
+
 }
