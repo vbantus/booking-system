@@ -27,15 +27,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Value("${minio.buckek.article.name}")
     private String articleBucket;
-    private static final String DEFAULT_IMAGE_URL = "https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 
     private final ArticleRepository articleRepository;
     private final UserService userService;
     private final MinioService minioService;
 
     @Override
-    public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile image) {
-        String imageUrl = saveImage(image);
+    public RsArticleDto save(MultipartFile image, RqCreateArticleDto rqCreateArticleDto) {
+        String imageUrl = minioService.saveImage(image, articleBucket);
 
         Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
         article.setUser(userService.findById(rqCreateArticleDto.getUserId()));
@@ -47,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public RsArticleDto update(Long id, MultipartFile image, RqUpdateArticleDto rqUpdateArticleDto) {
         Article article = findById(id);
-        String imageUrl = saveImage(image);
+        String imageUrl = minioService.saveImage(image, articleBucket);
         ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
         article.setImageUrl(imageUrl);
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
@@ -88,20 +87,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long count() {
         return articleRepository.count();
-    }
-
-    private String saveImage(MultipartFile multipartFile) {
-
-        if (multipartFile != null) {
-            String imageName = "image_" + UUID.randomUUID().toString() + ".jpg";
-            try {
-                return minioService.uploadImage(imageName, multipartFile.getBytes(), articleBucket);
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage());
-            }
-        }
-
-        return DEFAULT_IMAGE_URL;
     }
 
 }

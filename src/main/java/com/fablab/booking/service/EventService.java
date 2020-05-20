@@ -5,12 +5,13 @@ import com.fablab.booking.dto.RqCreateEventDto;
 import com.fablab.booking.dto.RqUpdateEventDto;
 import com.fablab.booking.dto.RsEventDto;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface EventService {
 
-    RsEventDto save(RqCreateEventDto rqCreateEventDto);
+    RsEventDto save(MultipartFile image, RqCreateEventDto rqCreateEventDto);
 
     RsEventDto update(RqUpdateEventDto rqUpdateEventDto, Long id);
 

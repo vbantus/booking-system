@@ -57,15 +57,15 @@ public class IndexController {
     }
 
 
-    @PostMapping(path = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public Map<String, String> uploadFile(@RequestPart(value = "file", required = false) MultipartFile files) throws IOException {
-        String name = files.getOriginalFilename().substring(files.getOriginalFilename().lastIndexOf("\\") + 1);
-        String path = minioService.uploadImage(name, files.getBytes(), "article");
-        Map<String, String> result = new HashMap<>();
-        result.put("key", files.getOriginalFilename());
-        result.put("name", path);
-        return result;
-    }
+//    @PostMapping(path = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    public Map<String, String> uploadFile(@RequestPart(value = "file", required = false) MultipartFile files) throws IOException {
+//        String name = files.getOriginalFilename().substring(files.getOriginalFilename().lastIndexOf("\\") + 1);
+//        String path = minioService.uploadImage(name, files.getBytes(), "article");
+//        Map<String, String> result = new HashMap<>();
+//        result.put("key", files.getOriginalFilename());
+//        result.put("name", path);
+//        return result;
+//    }
 
     @ApiImplicitParam(name = "test", dataType = "string", paramType = "query",
             value = "article string json representation",

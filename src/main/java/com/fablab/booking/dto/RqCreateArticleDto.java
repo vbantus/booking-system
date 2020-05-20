@@ -9,6 +9,6 @@ public class RqCreateArticleDto {
     private String title;
     @ApiModelProperty(value = "content", example = "cool content")
     private String content;
-    @ApiModelProperty(value = "title", example = "1")
+    @ApiModelProperty(value = "userId", example = "1")
     private Long userId;
 }

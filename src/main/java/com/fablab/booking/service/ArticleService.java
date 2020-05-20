@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ArticleService {
 
-    RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile image);
+    RsArticleDto save(MultipartFile image, RqCreateArticleDto rqCreateArticleDto);
 
     RsArticleDto update(Long id, MultipartFile image, RqUpdateArticleDto rqUpdateArticleDto);
 

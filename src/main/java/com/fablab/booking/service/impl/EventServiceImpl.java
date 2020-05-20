@@ -9,10 +9,13 @@ import com.fablab.booking.dto.RsEventDto;
 import com.fablab.booking.mapper.EventMapper;
 import com.fablab.booking.repository.EventRepository;
 import com.fablab.booking.service.EventService;
+import com.fablab.booking.service.MinioService;
 import com.fablab.booking.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,14 +24,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
 
+    @Value("${minio.buckek.event.name}")
+    private String eventBucket;
+
     private final EventRepository eventRepository;
     private final UserService userService;
+    private final MinioService minioService;
 
     @Override
-    public RsEventDto save(RqCreateEventDto rqCreateEventDto) {
+    public RsEventDto save(MultipartFile image, RqCreateEventDto rqCreateEventDto) {
+        String imageUrl = minioService.saveImage(image, eventBucket);
+
         Event event = EventMapper.INSTANCE.rqCreateEventDtoToEvent(rqCreateEventDto);
-        BookingUser user = userService.findById(rqCreateEventDto.getUserId());
-        event.setUser(user);
+        event.setUser(userService.findById(rqCreateEventDto.getUserId()));
+        event.setImageUrl(imageUrl);
         return EventMapper.INSTANCE.eventToRsEventDto(eventRepository.save(event));
     }
 
