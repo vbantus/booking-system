@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface ArticleService {
 
-    RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile titleImage, MultipartFile contentImage);
+    RsArticleDto save(MultipartFile image, RqCreateArticleDto rqCreateArticleDto);
 
-    RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id);
+    RsArticleDto update(Long id, MultipartFile image, RqUpdateArticleDto rqUpdateArticleDto);
 
     void deleteById(Long id);
 
@@ -24,4 +24,6 @@ public interface ArticleService {
     List<RsArticleDto> getAllByUserId(Long id, Pageable pageable);
 
     Article findById(Long id);
+
+    Long count();
 }

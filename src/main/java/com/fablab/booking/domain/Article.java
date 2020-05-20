@@ -6,14 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.awt.print.Book;
 import java.util.List;
@@ -28,10 +21,10 @@ import java.util.List;
 public class Article extends AbstractEntity {
     @Column(length = 30, nullable = false)
     private String title;
+    @Lob
     @NotNull
     private String content;
-    private String titleImageUrl;
-    private String contentImageUrl;
+    private String imageUrl;
     @OneToMany(
             mappedBy = "article",
             cascade = CascadeType.ALL,

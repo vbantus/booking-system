@@ -1,5 +1,7 @@
 package com.fablab.booking.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface MinioService {
 
     void createBucket(String bucketName);
@@ -8,5 +10,5 @@ public interface MinioService {
 
     void setBucketPolicyToReadOnly(String bucketName);
 
-    String uploadImage(String name, byte[] content, String bucketName);
+    String saveImage(MultipartFile multipartFile, String bucketName);
 }

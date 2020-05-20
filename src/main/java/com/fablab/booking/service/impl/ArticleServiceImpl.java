@@ -27,28 +27,28 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Value("${minio.buckek.article.name}")
     private String articleBucket;
-    private static final String DEFAULT_IMAGE_URL = "https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 
     private final ArticleRepository articleRepository;
     private final UserService userService;
     private final MinioService minioService;
 
     @Override
-    public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile titleImage, MultipartFile contentImage) {
-        String titleImageUrl = saveImage(titleImage);
-        String contentImageUrl = saveImage(contentImage);
+    public RsArticleDto save(MultipartFile image, RqCreateArticleDto rqCreateArticleDto) {
+        String imageUrl = minioService.saveImage(image, articleBucket);
 
         Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
         article.setUser(userService.findById(rqCreateArticleDto.getUserId()));
-        article.setTitleImageUrl(titleImageUrl);
-        article.setContentImageUrl(contentImageUrl);
+        article.setImageUrl(imageUrl);
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 
+    //TODO delete unused image
     @Override
-    public RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, Long id) {
+    public RsArticleDto update(Long id, MultipartFile image, RqUpdateArticleDto rqUpdateArticleDto) {
         Article article = findById(id);
+        String imageUrl = minioService.saveImage(image, articleBucket);
         ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
+        article.setImageUrl(imageUrl);
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 
@@ -84,18 +84,9 @@ public class ArticleServiceImpl implements ArticleService {
                 .orElseThrow(() -> new EntityNotFoundException("article not found by id: " + id));
     }
 
-    private String saveImage(MultipartFile multipartFile) {
-
-        if (multipartFile != null) {
-            String imageName = "image_" + UUID.randomUUID().toString() + ".jpg";
-            try {
-                return minioService.uploadImage(imageName, multipartFile.getBytes(), articleBucket);
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage());
-            }
-        }
-
-        return DEFAULT_IMAGE_URL;
+    @Override
+    public Long count() {
+        return articleRepository.count();
     }
 
 }

@@ -34,22 +34,17 @@ public class ArticleController {
     private final ArticleService articleService;
     private final CommentService commentService;
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", defaultValue = "cool title"),
-            @ApiImplicitParam(name = "content", dataType = "string", paramType = "query", defaultValue = "awesome content"),
-            @ApiImplicitParam(name = "userId", dataType = "integer", paramType = "query", defaultValue = "1")
-    })
     @PostMapping
-    public ResponseEntity<RsArticleDto> save(@RequestParam(value = "titleImage", required = false) MultipartFile titleImage,
-                                             @RequestParam(value = "contentImage", required = false) MultipartFile contentImage,
+    public ResponseEntity<RsArticleDto> save(@RequestParam(value = "image", required = false) MultipartFile image,
                                              RqCreateArticleDto rqCreateArticleDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto, titleImage, contentImage));
+        return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(image, rqCreateArticleDto));
     }
 
     @PutMapping("/{articleId}")
     public ResponseEntity<RsArticleDto> update(@PathVariable("articleId") Long articleId,
-                                               @RequestBody RqUpdateArticleDto rqUpdateArticleDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(articleService.update(rqUpdateArticleDto, articleId));
+                                               @RequestParam(value = "image", required = false) MultipartFile image,
+                                               RqUpdateArticleDto rqUpdateArticleDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.update(articleId, image, rqUpdateArticleDto));
     }
 
     @DeleteMapping("/{articleId}")
@@ -60,9 +55,9 @@ public class ArticleController {
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
-                    value = "Results page you want to retrieve (0..N)"),
+                    value = "Results page you want to retrieve (0..N)", defaultValue = "0"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-                    value = "Number of records per page.")
+                    value = "Number of records per page.", defaultValue = "20")
     })
     @GetMapping
     public ResponseEntity<List<RsArticleDto>> getAll(@ApiIgnore Pageable pageable) {
@@ -74,8 +69,14 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.getById(articleId));
     }
 
-    @GetMapping("/{articleId}/comments")
-    public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllByArticleId(articleId));
+//    @GetMapping("/{articleId}/comments")
+//    public ResponseEntity<List<RsCommentDto>> getAllCommentsByArticleId(@PathVariable("articleId") Long articleId) {
+//        return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllByArticleId(articleId));
+//    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getNumberOfArticles() {
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.count());
     }
+
 }
