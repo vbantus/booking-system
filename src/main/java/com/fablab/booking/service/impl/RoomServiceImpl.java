@@ -47,6 +47,6 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room findById(Long id) {
         return roomRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("hall not found by id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("room not found by id: " + id));
     }
 }
