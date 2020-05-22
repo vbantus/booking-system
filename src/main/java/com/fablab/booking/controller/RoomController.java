@@ -46,4 +46,9 @@ public class RoomController {
         return ResponseEntity.ok(roomService.getAll());
     }
 
+    @GetMapping("/{roomId}")
+    public ResponseEntity<RsRoomDto> getById(@PathVariable("roomId") Long roomId) {
+        return ResponseEntity.status(HttpStatus.OK).body(roomService.getById(roomId));
+    }
+
 }
