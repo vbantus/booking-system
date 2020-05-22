@@ -45,6 +45,12 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public RsRoomDto getById(Long id) {
+        Room room = findById(id);
+        return RoomMapper.INSTANCE.roomToRsRoomDto(room);
+    }
+
+    @Override
     public Room findById(Long id) {
         return roomRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("room not found by id: " + id));
