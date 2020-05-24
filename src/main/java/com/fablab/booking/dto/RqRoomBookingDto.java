@@ -9,10 +9,10 @@ import java.util.Date;
 @Data
 public class RqRoomBookingDto {
     @ApiModelProperty(value = "startBookingTime", example = "2020-04-20 09:00")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ssZ")
     private Date startBookingTime;
     @ApiModelProperty(value = "startBookingTime", example = "2020-04-20 10:30")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ssZ")
     private Date endBookingTime;
     private Long roomId;
     @ApiModelProperty(value = "userId", example = "1")
