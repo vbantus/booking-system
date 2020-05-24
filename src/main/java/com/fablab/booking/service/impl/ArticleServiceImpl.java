@@ -16,9 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +31,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final MinioService minioService;
 
     @Override
-    public RsArticleDto save(MultipartFile image, RqCreateArticleDto rqCreateArticleDto) {
+    public RsArticleDto save(RqCreateArticleDto rqCreateArticleDto, MultipartFile image) {
         String imageUrl = minioService.saveImage(image, articleBucket);
 
         Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
@@ -44,11 +42,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     //TODO delete unused image
     @Override
-    public RsArticleDto update(Long id, MultipartFile image, RqUpdateArticleDto rqUpdateArticleDto) {
+    public RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, MultipartFile image, Long id) {
         Article article = findById(id);
-        String imageUrl = minioService.saveImage(image, articleBucket);
         ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
-        article.setImageUrl(imageUrl);
+
+        if (image != null) {
+            String imageUrl = minioService.saveImage(image, articleBucket);
+            article.setImageUrl(imageUrl);
+        }
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 

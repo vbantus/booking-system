@@ -20,9 +20,9 @@ import java.util.Date;
 @Entity
 @Table(name = "events")
 public class Event extends AbstractEntity {
-    @Column(length = 30, nullable = false)
+    @Column(length = 200, nullable = false)
     private String title;
-    @NotNull
+    @Column(columnDefinition="TEXT", nullable = false)
     private String description;
     private String location;
     private int participationFee;

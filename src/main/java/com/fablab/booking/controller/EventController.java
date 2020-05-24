@@ -10,7 +10,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -24,16 +31,16 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public ResponseEntity<RsEventDto> save(@RequestParam(value = "image", required = false) MultipartFile image,
-                                           RqCreateEventDto rqCreateEventDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(eventService.save(image, rqCreateEventDto));
+    public ResponseEntity<RsEventDto> save(RqCreateEventDto rqCreateEventDto,
+                                           @RequestParam(value = "image", required = false) MultipartFile image) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventService.save(rqCreateEventDto, image));
     }
 
-    @PutMapping("/{eventId}")
-    public ResponseEntity<RsEventDto> update(@PathVariable("eventId") Long eventId,
+    @PatchMapping("/{eventId}")
+    public ResponseEntity<RsEventDto> update(RqUpdateEventDto rqUpdateEventDto,
                                              @RequestParam(value = "image", required = false) MultipartFile image,
-                                             RqUpdateEventDto rqUpdateEventDto) {
-        return ResponseEntity.ok(eventService.update(eventId, image, rqUpdateEventDto));
+                                             @PathVariable("eventId") Long eventId) {
+        return ResponseEntity.ok(eventService.update(rqUpdateEventDto, image, eventId));
     }
 
     @DeleteMapping("/{eventId}")
