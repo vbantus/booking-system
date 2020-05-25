@@ -53,7 +53,11 @@ public class EventController {
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
                     value = "Results page you want to retrieve (0..N)", defaultValue = "0"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-                    value = "Number of records per page.", defaultValue = "20")
+                    value = "Number of records per page.", defaultValue = "20"),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Sorting criteria in the format: property(,asc|desc). " +
+                            "Default sort order is ascending. " +
+                            "Multiple sort criteria are supported.")
     })
     @GetMapping
     public ResponseEntity<List<RsEventDto>> getAll(@ApiIgnore Pageable pageable) {
@@ -65,4 +69,38 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).body(eventService.getById(eventId));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getNumberOfComments() {
+        return ResponseEntity.status(HttpStatus.OK).body(eventService.count());
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                    value = "Results page you want to retrieve (0..N)", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                    value = "Number of records per page.", defaultValue = "20"),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Sorting criteria in the format: property(,asc|desc). " +
+                            "Default sort order is ascending. " +
+                            "Multiple sort criteria are supported.")
+    })
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<RsEventDto>> getAllUpcomingEvents(@ApiIgnore Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(eventService.getAllUpcomingEvents(pageable));
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                    value = "Results page you want to retrieve (0..N)", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                    value = "Number of records per page.", defaultValue = "20"),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Sorting criteria in the format: property(,asc|desc). " +
+                            "Default sort order is ascending. " +
+                            "Multiple sort criteria are supported.")
+    })
+    @GetMapping("/past")
+    public ResponseEntity<List<RsEventDto>> getAllPastEvents(@ApiIgnore Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(eventService.getAllPastEvents(pageable));
+    }
 }

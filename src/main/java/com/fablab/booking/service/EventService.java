@@ -23,5 +23,11 @@ public interface EventService {
 
     RsEventDto getById(Long id);
 
+    Long count();
+
+    List<RsEventDto> getAllUpcomingEvents(Pageable pageable);
+
+    List<RsEventDto> getAllPastEvents(Pageable pageable);
+
     Event findById(Long id);
 }

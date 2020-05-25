@@ -40,10 +40,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 .antMatchers("/booking/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET,
-                        "/booking/article",
-                        "/booking/article/*",
-                        "/booking/article/count",
-                        "/booking/event").permitAll()
+                        "/booking/articles",
+                        "/booking/articles/*",
+                        "/booking/articles/count",
+                        "/booking/events",
+                        "/booking/events/count",
+                        "/booking/events/upcoming",
+                        "/booking/events/past").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

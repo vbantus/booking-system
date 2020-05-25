@@ -10,6 +10,7 @@ import com.fablab.booking.repository.EventRepository;
 import com.fablab.booking.service.EventService;
 import com.fablab.booking.service.MinioService;
 import com.fablab.booking.service.UserService;
+import com.fablab.booking.service.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -32,8 +33,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public RsEventDto save(RqCreateEventDto rqCreateEventDto, MultipartFile image) {
-        String imageUrl = minioService.saveImage(image, eventBucket);
+        //TimeUtils.validateDates(rqCreateEventDto.getStartTime(), rqCreateEventDto.getEndTime());
 
+        String imageUrl = minioService.saveImage(image, eventBucket);
         Event event = EventMapper.INSTANCE.rqCreateEventDtoToEvent(rqCreateEventDto);
         event.setUser(userService.findById(rqCreateEventDto.getUserId()));
         event.setImageUrl(imageUrl);
@@ -76,6 +78,25 @@ public class EventServiceImpl implements EventService {
     public RsEventDto getById(Long id) {
         Event event = findById(id);
         return EventMapper.INSTANCE.eventToRsEventDto(event);
+    }
+
+    @Override
+    public Long count() {
+        return eventRepository.count();
+    }
+
+    @Override
+    public List<RsEventDto> getAllUpcomingEvents(Pageable pageable) {
+        return eventRepository.findAllUpcomingEvents(pageable).stream()
+                .map(EventMapper.INSTANCE::eventToRsEventDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsEventDto> getAllPastEvents(Pageable pageable) {
+        return eventRepository.findAllPastEvents(pageable).stream()
+                .map(EventMapper.INSTANCE::eventToRsEventDto)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -80,14 +80,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article findById(Long id) {
-        return articleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("article not found by id: " + id));
-    }
-
-    @Override
     public Long count() {
         return articleRepository.count();
     }
 
+    @Override
+    public Article findById(Long id) {
+        return articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("article not found by id: " + id));
+    }
 }
