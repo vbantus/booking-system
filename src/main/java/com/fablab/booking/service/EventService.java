@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface EventService {
 
-    RsEventDto save(MultipartFile image, RqCreateEventDto rqCreateEventDto);
+    RsEventDto save(RqCreateEventDto rqCreateEventDto, MultipartFile image);
 
-    RsEventDto update(Long id, MultipartFile image, RqUpdateEventDto rqUpdateEventDto);
+    RsEventDto update(RqUpdateEventDto rqUpdateEventDto, MultipartFile image, Long id);
 
     void deleteById(Long id);
 
@@ -22,6 +22,12 @@ public interface EventService {
     List<RsEventDto> getAll(Pageable pageable);
 
     RsEventDto getById(Long id);
+
+    Long count();
+
+    List<RsEventDto> getAllUpcomingEvents(Pageable pageable);
+
+    List<RsEventDto> getAllPastEvents(Pageable pageable);
 
     Event findById(Long id);
 }

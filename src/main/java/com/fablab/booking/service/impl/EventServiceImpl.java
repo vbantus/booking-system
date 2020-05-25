@@ -1,6 +1,5 @@
 package com.fablab.booking.service.impl;
 
-import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.domain.Event;
 import com.fablab.booking.domain.common.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateEventDto;
@@ -11,6 +10,7 @@ import com.fablab.booking.repository.EventRepository;
 import com.fablab.booking.service.EventService;
 import com.fablab.booking.service.MinioService;
 import com.fablab.booking.service.UserService;
+import com.fablab.booking.service.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -32,9 +32,10 @@ public class EventServiceImpl implements EventService {
     private final MinioService minioService;
 
     @Override
-    public RsEventDto save(MultipartFile image, RqCreateEventDto rqCreateEventDto) {
-        String imageUrl = minioService.saveImage(image, eventBucket);
+    public RsEventDto save(RqCreateEventDto rqCreateEventDto, MultipartFile image) {
+        //TimeUtils.validateDates(rqCreateEventDto.getStartTime(), rqCreateEventDto.getEndTime());
 
+        String imageUrl = minioService.saveImage(image, eventBucket);
         Event event = EventMapper.INSTANCE.rqCreateEventDtoToEvent(rqCreateEventDto);
         event.setUser(userService.findById(rqCreateEventDto.getUserId()));
         event.setImageUrl(imageUrl);
@@ -43,11 +44,14 @@ public class EventServiceImpl implements EventService {
 
     //TODO delete unused image
     @Override
-    public RsEventDto update(Long id, MultipartFile image, RqUpdateEventDto rqUpdateEventDto) {
-        Event event = eventRepository.findById(id).get();
-        String imageUrl = minioService.saveImage(image, eventBucket);
+    public RsEventDto update(RqUpdateEventDto rqUpdateEventDto, MultipartFile image, Long id) {
+        Event event = findById(id);
         EventMapper.INSTANCE.updateEventFromRqUpdateEventDto(rqUpdateEventDto, event);
-        event.setImageUrl(imageUrl);
+
+        if (image != null) {
+            String imageUrl = minioService.saveImage(image, eventBucket);
+            event.setImageUrl(imageUrl);
+        }
         return EventMapper.INSTANCE.eventToRsEventDto(eventRepository.save(event));
     }
 
@@ -74,6 +78,25 @@ public class EventServiceImpl implements EventService {
     public RsEventDto getById(Long id) {
         Event event = findById(id);
         return EventMapper.INSTANCE.eventToRsEventDto(event);
+    }
+
+    @Override
+    public Long count() {
+        return eventRepository.count();
+    }
+
+    @Override
+    public List<RsEventDto> getAllUpcomingEvents(Pageable pageable) {
+        return eventRepository.findAllUpcomingEvents(pageable).stream()
+                .map(EventMapper.INSTANCE::eventToRsEventDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsEventDto> getAllPastEvents(Pageable pageable) {
+        return eventRepository.findAllPastEvents(pageable).stream()
+                .map(EventMapper.INSTANCE::eventToRsEventDto)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -39,9 +39,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "favicon.ico"
                 ).permitAll()
                 .antMatchers("/booking/auth/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/booking/article").permitAll()
-                .antMatchers(HttpMethod.GET, "/booking/article/count").permitAll()
-                .antMatchers(HttpMethod.GET, "/booking/event").permitAll()
+                .antMatchers(HttpMethod.GET,
+                        "/booking/articles",
+                        "/booking/articles/*",
+                        "/booking/articles/count",
+                        "/booking/events",
+                        "/booking/events/count",
+                        "/booking/events/upcoming",
+                        "/booking/events/past").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

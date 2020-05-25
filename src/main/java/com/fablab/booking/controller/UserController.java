@@ -16,7 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/booking/user")
+@RequestMapping("/booking/users")
 public class UserController {
 
     private final UserService userService;

@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -23,7 +24,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "comments")
 public class Comment extends AbstractEntity {
-    @NotNull
+    @Column(columnDefinition="TEXT", nullable = false)
     private String content;
     @ManyToOne(
             fetch = FetchType.LAZY

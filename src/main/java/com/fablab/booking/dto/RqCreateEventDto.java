@@ -2,6 +2,7 @@ package com.fablab.booking.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -15,8 +16,8 @@ public class RqCreateEventDto {
     private String description;
     private String location;
     private int participationFee;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     @ApiModelProperty(value = "userId", example = "1")
     private Long userId;
 }

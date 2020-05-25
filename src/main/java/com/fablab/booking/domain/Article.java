@@ -19,10 +19,9 @@ import java.util.List;
 @Entity
 @Table(name = "articles")
 public class Article extends AbstractEntity {
-    @Column(length = 30, nullable = false)
+    @Column(length = 200, nullable = false)
     private String title;
-    @Lob
-    @NotNull
+    @Column(columnDefinition="TEXT", nullable = false)
     private String content;
     private String imageUrl;
     @OneToMany(
