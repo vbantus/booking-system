@@ -10,6 +10,7 @@ import com.fablab.booking.repository.RoomBookingRepository;
 import com.fablab.booking.service.RoomBookingService;
 import com.fablab.booking.service.RoomService;
 import com.fablab.booking.service.UserService;
+import com.fablab.booking.service.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ public class RoomBookingServiceImpl implements RoomBookingService {
 
     @Override
     public RsRoomBookingDto save(RqRoomBookingDto rqRoomBookingDto) {
+        TimeUtils.validateDates(rqRoomBookingDto.getStartBookingTime(), rqRoomBookingDto.getEndBookingTime());
+
         RoomBooking roomBooking =
                 RoomBookingMapper.INSTANCE.rqBookingSpaceRelationDtoToBookingSpaceRelation(rqRoomBookingDto);
 

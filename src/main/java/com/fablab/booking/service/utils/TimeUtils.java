@@ -8,7 +8,7 @@ public class TimeUtils {
 
     public static void validateDates(Date startTime, Date endTime) {
         if (startTime.after(endTime)) {
-            throw new TimeConflictException("startTime: " + startTime + " has to be before endTime: " + endTime);
+            throw new TimeConflictException("startTime: [" + startTime + "] has to be before endTime: [" + endTime + "]");
         }
     }
 }

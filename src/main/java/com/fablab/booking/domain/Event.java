@@ -27,7 +27,9 @@ public class Event extends AbstractEntity {
     private String location;
     private int participationFee;
     private String imageUrl;
+    @NotNull
     private Date startTime;
+    @NotNull
     private Date endTime;
     @ManyToOne(
             fetch = FetchType.LAZY

@@ -33,7 +33,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public RsEventDto save(RqCreateEventDto rqCreateEventDto, MultipartFile image) {
-        //TimeUtils.validateDates(rqCreateEventDto.getStartTime(), rqCreateEventDto.getEndTime());
+        TimeUtils.validateDates(rqCreateEventDto.getStartTime(), rqCreateEventDto.getEndTime());
 
         String imageUrl = minioService.saveImage(image, eventBucket);
         Event event = EventMapper.INSTANCE.rqCreateEventDtoToEvent(rqCreateEventDto);
