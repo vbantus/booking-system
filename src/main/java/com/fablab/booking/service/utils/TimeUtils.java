@@ -1,6 +1,6 @@
 package com.fablab.booking.service.utils;
 
-import com.fablab.booking.domain.common.exception.TimeConflictException;
+import com.fablab.booking.exception.TimeConflictException;
 
 import java.util.Date;
 

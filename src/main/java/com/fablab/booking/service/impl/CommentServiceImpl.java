@@ -2,7 +2,7 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Article;
 import com.fablab.booking.domain.Comment;
-import com.fablab.booking.domain.common.exception.EntityNotFoundException;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateCommentDto;
 import com.fablab.booking.dto.RqUpdateCommentDto;
 import com.fablab.booking.dto.RsCommentDto;

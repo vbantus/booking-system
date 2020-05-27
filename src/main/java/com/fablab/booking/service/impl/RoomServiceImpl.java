@@ -1,7 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Room;
-import com.fablab.booking.domain.common.exception.EntityNotFoundException;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqRoomDto;
 import com.fablab.booking.dto.RsRoomDto;
 import com.fablab.booking.mapper.RoomMapper;

@@ -1,7 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Event;
-import com.fablab.booking.domain.common.exception.EntityNotFoundException;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateEventDto;
 import com.fablab.booking.dto.RqUpdateEventDto;
 import com.fablab.booking.dto.RsEventDto;
