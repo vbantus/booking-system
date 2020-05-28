@@ -1,7 +1,7 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Event;
-import com.fablab.booking.domain.common.exception.EntityNotFoundException;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateEventDto;
 import com.fablab.booking.dto.RqUpdateEventDto;
 import com.fablab.booking.dto.RsEventDto;
@@ -33,7 +33,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public RsEventDto save(RqCreateEventDto rqCreateEventDto, MultipartFile image) {
-        //TimeUtils.validateDates(rqCreateEventDto.getStartTime(), rqCreateEventDto.getEndTime());
+        TimeUtils.validateDates(rqCreateEventDto.getStartTime(), rqCreateEventDto.getEndTime());
 
         String imageUrl = minioService.saveImage(image, eventBucket);
         Event event = EventMapper.INSTANCE.rqCreateEventDtoToEvent(rqCreateEventDto);

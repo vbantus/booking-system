@@ -15,8 +15,8 @@ public interface EventMapper {
 
     EventMapper INSTANCE = Mappers.getMapper(EventMapper.class);
 
-    @Mapping(source = "endTime", target = "endTime", dateFormat = "yyyy-MM-dd HH:mm:ssZ")
-    @Mapping(source = "startTime", target = "startTime", dateFormat = "yyyy-MM-dd HH:mm:ssZ")
+//    @Mapping(source = "startTime", target = "startTime", dateFormat = "yyyy-MM-dd HH:mm:ssZ")
+//    @Mapping(source = "endTime", target = "endTime", dateFormat = "yyyy-MM-dd HH:mm:ssZ")
     Event rqCreateEventDtoToEvent(RqCreateEventDto rqCreateEventDto);
 
     @Mapping(source = "event.user.id", target = "userId")

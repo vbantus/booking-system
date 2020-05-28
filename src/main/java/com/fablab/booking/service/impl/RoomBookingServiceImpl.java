@@ -2,7 +2,8 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.RoomBooking;
 import com.fablab.booking.domain.common.BookingStatus;
-import com.fablab.booking.domain.common.exception.EntityNotFoundException;
+import com.fablab.booking.exception.BookingNotAllowedException;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqRoomBookingDto;
 import com.fablab.booking.dto.RsRoomBookingDto;
 import com.fablab.booking.mapper.RoomBookingMapper;
@@ -10,6 +11,7 @@ import com.fablab.booking.repository.RoomBookingRepository;
 import com.fablab.booking.service.RoomBookingService;
 import com.fablab.booking.service.RoomService;
 import com.fablab.booking.service.UserService;
+import com.fablab.booking.service.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,9 @@ public class RoomBookingServiceImpl implements RoomBookingService {
 
     @Override
     public RsRoomBookingDto save(RqRoomBookingDto rqRoomBookingDto) {
+        TimeUtils.validateDates(rqRoomBookingDto.getStartBookingTime(), rqRoomBookingDto.getEndBookingTime());
+        checkRoomAvailability(rqRoomBookingDto);
+
         RoomBooking roomBooking =
                 RoomBookingMapper.INSTANCE.rqBookingSpaceRelationDtoToBookingSpaceRelation(rqRoomBookingDto);
 
@@ -105,5 +110,17 @@ public class RoomBookingServiceImpl implements RoomBookingService {
     public RoomBooking findById(Long id) {
         return roomBookingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("hall booking not found by id: " + id));
+    }
+
+    private void checkRoomAvailability(RqRoomBookingDto rqRoomBookingDto) {
+        Long count = roomBookingRepository.countAllBookingsInGivenPeriodByRoomId(
+                rqRoomBookingDto.getStartBookingTime(),
+                rqRoomBookingDto.getEndBookingTime(),
+                rqRoomBookingDto.getRoomId());
+
+        if(count > 0){
+            throw new BookingNotAllowedException("Room is not available for booking in this period of time. " +
+                    "There are other " + count + " bookings which conflict with this one.");
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.fablab.booking.domain.common.exception;
+package com.fablab.booking.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message){

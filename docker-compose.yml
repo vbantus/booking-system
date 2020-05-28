@@ -35,7 +35,7 @@ services:
     - SPRING_DATASOURCE_PASSWORD=password
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/booking
     - MINIO_URL=http://minio-storage:9000
-    #need this property to be able to access images from minIO when running with docker
+    #need this property in order to be able to access images from minIO when running with docker
     - MINIO_IMAGE_URL=http://localhost:9004
     ports:
     - 8084:8080
