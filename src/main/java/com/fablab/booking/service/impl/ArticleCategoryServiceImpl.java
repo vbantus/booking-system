@@ -56,6 +56,6 @@ public class ArticleCategoryServiceImpl implements ArticleCategoryService {
     @Override
     public ArticleCategory findByName(String name) {
         return articleCategoryRepository.findByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("article not found by name: " + name));
+                .orElseThrow(() -> new EntityNotFoundException("article category not found by name: " + name));
     }
 }

@@ -33,7 +33,7 @@ public class Article extends AbstractEntity {
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "article_category_id")
-    private ArticleCategory articleCategory;
+    private ArticleCategory category;
 
     public void addComment(Comment comment) {
         comments.add(comment);
