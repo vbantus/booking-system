@@ -2,11 +2,17 @@ package com.fablab.booking.controller;
 
 import com.fablab.booking.dto.RqArticleCategoryDto;
 import com.fablab.booking.dto.RsArticleCategoryDto;
+import com.fablab.booking.dto.RsArticleDto;
 import com.fablab.booking.service.ArticleCategoryService;
+import com.fablab.booking.service.ArticleService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -16,6 +22,7 @@ import java.util.List;
 public class ArticleCategoryController {
 
     private final ArticleCategoryService articleCategoryService;
+    private final ArticleService articleService;
 
     @PostMapping
     public ResponseEntity<RsArticleCategoryDto> save(@RequestBody RqArticleCategoryDto rqArticleCategoryDto) {
@@ -40,8 +47,24 @@ public class ArticleCategoryController {
     }
 
     @GetMapping("/{articleCategoryName}")
-    public ResponseEntity<RsArticleCategoryDto> getByName(@PathVariable("articleCategoryName") String  articleCategoryName) {
+    public ResponseEntity<RsArticleCategoryDto> getByName(@PathVariable("articleCategoryName") String articleCategoryName) {
         return ResponseEntity.ok(articleCategoryService.getByName(articleCategoryName));
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                    value = "Results page you want to retrieve (0..N)", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                    value = "Number of records per page.", defaultValue = "20"),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Sorting criteria in the format: property(,asc|desc). " +
+                            "Default sort order is ascending. " +
+                            "Multiple sort criteria are supported.")
+    })
+    @GetMapping("/{category}/articles")
+    public ResponseEntity<List<RsArticleDto>> getAllArticlesByCategoryName(@PathVariable("category") String articleCategoryName,
+                                                                           @ApiIgnore Pageable pageable) {
+        return ResponseEntity.ok(articleService.getAllByCategoryName(articleCategoryName, pageable));
     }
 
 }

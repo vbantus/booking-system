@@ -85,6 +85,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<RsArticleDto> getAllByCategoryName(String categoryName, Pageable pageable) {
+        return articleRepository.findAllByCategoryName(categoryName, pageable).stream()
+                .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Long count() {
         return articleRepository.count();
     }

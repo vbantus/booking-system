@@ -23,6 +23,8 @@ public interface ArticleService {
 
     List<RsArticleDto> getAllByUserId(Long id, Pageable pageable);
 
+    List<RsArticleDto> getAllByCategoryName(String categoryName, Pageable pageable);
+
     Long count();
 
     Article findById(Long id);
