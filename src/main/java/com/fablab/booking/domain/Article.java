@@ -1,14 +1,8 @@
 package com.fablab.booking.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.awt.print.Book;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,7 +15,7 @@ import java.util.List;
 public class Article extends AbstractEntity {
     @Column(length = 200, nullable = false)
     private String title;
-    @Column(columnDefinition="TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
     private String imageUrl;
     @OneToMany(
@@ -35,6 +29,11 @@ public class Article extends AbstractEntity {
     )
     @JoinColumn(name = "user_id")
     private BookingUser user;
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "article_category_id")
+    private ArticleCategory articleCategory;
 
     public void addComment(Comment comment) {
         comments.add(comment);
