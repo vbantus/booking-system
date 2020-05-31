@@ -4,7 +4,6 @@ import com.fablab.booking.dto.RqCreateArticleDto;
 import com.fablab.booking.dto.RqUpdateArticleDto;
 import com.fablab.booking.dto.RsArticleDto;
 import com.fablab.booking.service.ArticleService;
-import com.fablab.booking.service.CommentService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,16 +23,15 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
-    private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<RsArticleDto> save(RqCreateArticleDto rqCreateArticleDto,
+    public ResponseEntity<RsArticleDto> save(@Valid RqCreateArticleDto rqCreateArticleDto,
                                              @RequestParam(value = "image", required = false) MultipartFile image) {
         return ResponseEntity.status(HttpStatus.CREATED).body(articleService.save(rqCreateArticleDto, image));
     }
 
     @PatchMapping("/{articleId}")
-    public ResponseEntity<RsArticleDto> update(RqUpdateArticleDto rqUpdateArticleDto,
+    public ResponseEntity<RsArticleDto> update(@Valid RqUpdateArticleDto rqUpdateArticleDto,
                                                @RequestParam(value = "image", required = false) MultipartFile image,
                                                @PathVariable("articleId") Long articleId) {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.update(rqUpdateArticleDto, image, articleId));

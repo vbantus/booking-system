@@ -1,11 +1,8 @@
 package com.fablab.booking.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -16,7 +13,8 @@ import javax.persistence.Table;
 @Builder
 @Entity
 @Table(name = "rooms")
-public class Room extends AbstractEntity{
+public class Room extends AbstractEntity {
+    @Column(unique = true, nullable = false)
     private String name;
     private int pricePerHour;
     private String description;

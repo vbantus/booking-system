@@ -2,14 +2,8 @@ package com.fablab.booking.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.Duration;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -20,9 +14,9 @@ import java.util.Date;
 @Entity
 @Table(name = "events")
 public class Event extends AbstractEntity {
-    @Column(length = 200, nullable = false)
+    @Column(length = 200, unique = true, nullable = false)
     private String title;
-    @Column(columnDefinition="TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
     private String location;
     private int participationFee;

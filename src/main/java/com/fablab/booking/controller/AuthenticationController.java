@@ -1,6 +1,5 @@
 package com.fablab.booking.controller;
 
-import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.dto.AuthenticateUserDto;
 import com.fablab.booking.dto.JwtResponseDto;
 import com.fablab.booking.dto.RqRegisterUserDto;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/booking/auth")
@@ -24,7 +25,7 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/sign-in")
-    public ResponseEntity<RsUserDto> registerUser(@RequestBody RqRegisterUserDto rqRegisterUserDto) {
+    public ResponseEntity<RsUserDto> registerUser(@Valid @RequestBody RqRegisterUserDto rqRegisterUserDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(rqRegisterUserDto));
     }
 

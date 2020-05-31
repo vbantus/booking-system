@@ -6,15 +6,9 @@ import com.fablab.booking.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,13 +19,13 @@ public class RoomController {
     private final RoomService roomService;
 
     @PostMapping
-    public ResponseEntity<RsRoomDto> save(@RequestBody RqRoomDto rqRoomDto) {
+    public ResponseEntity<RsRoomDto> save(@Valid @RequestBody RqRoomDto rqRoomDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(roomService.save(rqRoomDto));
     }
 
     @PutMapping("/{roomId}")
-    public ResponseEntity<RsRoomDto> update(@PathVariable("roomId") Long roomId,
-                                            @RequestBody RqRoomDto rqRoomDto) {
+    public ResponseEntity<RsRoomDto> update(@Valid @RequestBody RqRoomDto rqRoomDto,
+                                            @PathVariable("roomId") Long roomId) {
         return ResponseEntity.ok(roomService.update(rqRoomDto, roomId));
     }
 

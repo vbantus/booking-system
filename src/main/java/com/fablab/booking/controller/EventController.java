@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,13 +32,13 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public ResponseEntity<RsEventDto> save(RqCreateEventDto rqCreateEventDto,
+    public ResponseEntity<RsEventDto> save(@Valid RqCreateEventDto rqCreateEventDto,
                                            @RequestParam(value = "image", required = false) MultipartFile image) {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventService.save(rqCreateEventDto, image));
     }
 
     @PatchMapping("/{eventId}")
-    public ResponseEntity<RsEventDto> update(RqUpdateEventDto rqUpdateEventDto,
+    public ResponseEntity<RsEventDto> update(@Valid RqUpdateEventDto rqUpdateEventDto,
                                              @RequestParam(value = "image", required = false) MultipartFile image,
                                              @PathVariable("eventId") Long eventId) {
         return ResponseEntity.ok(eventService.update(rqUpdateEventDto, image, eventId));

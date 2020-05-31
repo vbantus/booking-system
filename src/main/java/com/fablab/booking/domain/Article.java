@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "articles")
 public class Article extends AbstractEntity {
-    @Column(length = 200, nullable = false)
+    @Column(length = 200, unique = true, nullable = false)
     private String title;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
