@@ -15,19 +15,39 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<List<String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        List<String> errors = ex.getBindingResult().getFieldErrors().stream()
-                .map(e -> e.getField() + ": " + e.getDefaultMessage())
+    public ResponseEntity<ValidationResponseDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+
+        List<ValidationError> errors = ex.getBindingResult().getFieldErrors().stream()
+                .map(e -> ValidationError.builder()
+                        .field(e.getField())
+                        .message(e.getDefaultMessage())
+                        .build())
                 .collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+
+        ValidationResponseDto validationResponse = ValidationResponseDto.builder()
+                .message("Validation Failed")
+                .fields(errors.size())
+                .validationErrors(errors)
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationResponse);
     }
 
     @ExceptionHandler({BindException.class})
-    public ResponseEntity<List<String>> handleBindException(BindException ex) {
-        List<String> errors = ex.getFieldErrors().stream()
-                .map(e -> e.getField() + ": " + e.getDefaultMessage())
+    public ResponseEntity<ValidationResponseDto> handleBindException(BindException ex) {
+
+        List<ValidationError> errors = ex.getFieldErrors().stream()
+                .map(e -> ValidationError.builder()
+                        .field(e.getField())
+                        .message(e.getDefaultMessage())
+                        .build())
                 .collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+
+        ValidationResponseDto validationResponse = ValidationResponseDto.builder()
+                .message("Validation Failed")
+                .fields(errors.size())
+                .validationErrors(errors)
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationResponse);
     }
 
     @ExceptionHandler({EntityNotFoundException.class})
@@ -45,7 +65,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getSQLException().getMessage());
     }
 
-    //    @ExceptionHandler({ConstraintViolationException.class})
+//    //javax.validation.ConstraintViolationException.class
+//    @ExceptionHandler({javax.validation.ConstraintViolationException.class})
 //    public ResponseEntity<List<String>> handleConstraintViolationException(ConstraintViolationException ex) {
 //
 //        List<String> errors = ex.getConstraintViolations().stream()
