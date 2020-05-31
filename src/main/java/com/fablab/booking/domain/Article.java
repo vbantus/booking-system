@@ -3,6 +3,7 @@ package com.fablab.booking.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,7 +24,7 @@ public class Article extends AbstractEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
     @ManyToOne(
             fetch = FetchType.LAZY
     )

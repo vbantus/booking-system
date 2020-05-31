@@ -1,7 +1,10 @@
 package com.fablab.booking.bootstrap;
 
+import com.fablab.booking.domain.Article;
+import com.fablab.booking.domain.ArticleCategory;
 import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.domain.common.UserRole;
+import com.fablab.booking.repository.ArticleCategoryRepository;
 import com.fablab.booking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +18,7 @@ import java.util.Arrays;
 public class DbSeeder implements CommandLineRunner {
 
     private final UserRepository userRepository;
+    private final ArticleCategoryRepository articleCategoryRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -41,6 +45,17 @@ public class DbSeeder implements CommandLineRunner {
                 .role(UserRole.ROLE_ADMIN)
                 .build();
 
+        ArticleCategory advertisement = ArticleCategory.builder()
+                .name("ADVERTISEMENT")
+                .description("advertisement")
+                .build();
+
+        ArticleCategory contenst = ArticleCategory.builder()
+                .name("CONTEST")
+                .description("contest")
+                .build();
+
         userRepository.saveAll(Arrays.asList(simpleUser, adminUser));
+        articleCategoryRepository.saveAll(Arrays.asList(advertisement, contenst));
     }
 }
