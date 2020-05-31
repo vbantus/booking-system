@@ -2,10 +2,10 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.RoomBooking;
 import com.fablab.booking.domain.common.BookingStatus;
-import com.fablab.booking.exception.BookingNotAllowedException;
-import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqRoomBookingDto;
 import com.fablab.booking.dto.RsRoomBookingDto;
+import com.fablab.booking.exception.BookingNotAllowedException;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.mapper.RoomBookingMapper;
 import com.fablab.booking.repository.RoomBookingRepository;
 import com.fablab.booking.service.RoomBookingService;
@@ -28,11 +28,10 @@ public class RoomBookingServiceImpl implements RoomBookingService {
 
     @Override
     public RsRoomBookingDto save(RqRoomBookingDto rqRoomBookingDto) {
-        TimeUtils.validateDates(rqRoomBookingDto.getStartBookingTime(), rqRoomBookingDto.getEndBookingTime());
-        checkRoomAvailability(rqRoomBookingDto);
-
         RoomBooking roomBooking =
                 RoomBookingMapper.INSTANCE.rqBookingSpaceRelationDtoToBookingSpaceRelation(rqRoomBookingDto);
+        TimeUtils.validateDates(roomBooking.getStartBookingTime(), roomBooking.getEndBookingTime());
+        checkRoomAvailability(roomBooking, rqRoomBookingDto.getRoomId());
 
         roomBooking.setStatus(BookingStatus.CREATED);
         roomBooking.setUser(userService.findById(rqRoomBookingDto.getUserId()));
@@ -47,6 +46,8 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         RoomBooking roomBooking = findById(id);
         RoomBookingMapper.INSTANCE
                 .updateBookingSpaceRelationFromRqBookingSpaceRelationDto(rqRoomBookingDto, roomBooking);
+        TimeUtils.validateDates(roomBooking.getStartBookingTime(), roomBooking.getEndBookingTime());
+        checkRoomAvailability(roomBooking, rqRoomBookingDto.getRoomId());
 
         return RoomBookingMapper.INSTANCE
                 .roomBookingToRsRoomBookingDto(roomBookingRepository.save(roomBooking));
@@ -112,13 +113,13 @@ public class RoomBookingServiceImpl implements RoomBookingService {
                 .orElseThrow(() -> new EntityNotFoundException("hall booking not found by id: " + id));
     }
 
-    private void checkRoomAvailability(RqRoomBookingDto rqRoomBookingDto) {
+    private void checkRoomAvailability(RoomBooking roomBooking, Long roomId) {
         Long count = roomBookingRepository.countAllBookingsInGivenPeriodByRoomId(
-                rqRoomBookingDto.getStartBookingTime(),
-                rqRoomBookingDto.getEndBookingTime(),
-                rqRoomBookingDto.getRoomId());
+                roomBooking.getStartBookingTime(),
+                roomBooking.getEndBookingTime(),
+                roomId);
 
-        if(count > 0){
+        if (count > 0) {
             throw new BookingNotAllowedException("Room is not available for booking in this period of time. " +
                     "There are other " + count + " bookings which conflict with this one.");
         }

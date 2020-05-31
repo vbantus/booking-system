@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,8 +26,8 @@ public class UserController {
     private final EventService eventService;
 
     @PutMapping("/{userId}")
-    public ResponseEntity<RsUserDto> update(@PathVariable("userId") Long userId,
-                                            @RequestBody RqUpdateUserDto rqUpdateUserDto) {
+    public ResponseEntity<RsUserDto> update(@Valid @RequestBody RqUpdateUserDto rqUpdateUserDto,
+                                            @PathVariable("userId") Long userId) {
         return ResponseEntity.ok(userService.update(rqUpdateUserDto, userId));
     }
 
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RsUserDto>> getAll(){
+    public ResponseEntity<List<RsUserDto>> getAll() {
         return ResponseEntity.ok(userService.getAll());
     }
 

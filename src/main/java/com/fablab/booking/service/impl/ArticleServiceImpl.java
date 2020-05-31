@@ -1,12 +1,13 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Article;
-import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqCreateArticleDto;
 import com.fablab.booking.dto.RqUpdateArticleDto;
 import com.fablab.booking.dto.RsArticleDto;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.mapper.ArticleMapper;
 import com.fablab.booking.repository.ArticleRepository;
+import com.fablab.booking.service.ArticleCategoryService;
 import com.fablab.booking.service.ArticleService;
 import com.fablab.booking.service.MinioService;
 import com.fablab.booking.service.UserService;
@@ -28,6 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
     private final UserService userService;
+    private final ArticleCategoryService articleCategoryService;
     private final MinioService minioService;
 
     @Override
@@ -37,6 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = ArticleMapper.INSTANCE.rqCreateArticleDtoToArticle(rqCreateArticleDto);
         article.setUser(userService.findById(rqCreateArticleDto.getUserId()));
         article.setImageUrl(imageUrl);
+        article.setCategory(articleCategoryService.findByName(rqCreateArticleDto.getCategory()));
         return ArticleMapper.INSTANCE.articleToRsArticleDto(articleRepository.save(article));
     }
 
@@ -45,6 +48,8 @@ public class ArticleServiceImpl implements ArticleService {
     public RsArticleDto update(RqUpdateArticleDto rqUpdateArticleDto, MultipartFile image, Long id) {
         Article article = findById(id);
         ArticleMapper.INSTANCE.updateArticleFromRqUpdateArticleDto(rqUpdateArticleDto, article);
+        article.setCategory(articleCategoryService.findByName(rqUpdateArticleDto.getCategory()));
+
 
         if (image != null) {
             String imageUrl = minioService.saveImage(image, articleBucket);
@@ -75,6 +80,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<RsArticleDto> getAllByUserId(Long id, Pageable pageable) {
         return articleRepository.findAllByUserId(id, pageable).stream()
+                .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RsArticleDto> getAllByCategoryName(String categoryName, Pageable pageable) {
+        return articleRepository.findAllByCategoryName(categoryName, pageable).stream()
                 .map(ArticleMapper.INSTANCE::articleToRsArticleDto)
                 .collect(Collectors.toList());
     }

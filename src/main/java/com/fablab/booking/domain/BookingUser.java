@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ import java.util.Set;
 public class BookingUser extends AbstractEntity {
     @Column(unique = true, nullable = false)
     private String username;
+    @NotNull
     private String password;
     private Boolean enabled;
     private String email;

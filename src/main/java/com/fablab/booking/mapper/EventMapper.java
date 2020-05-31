@@ -10,17 +10,21 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
+import static com.fablab.booking.service.utils.TimeUtils.DATE_PATTERN;
+
 @Mapper(builder = @Builder(disableBuilder = true))
 public interface EventMapper {
 
     EventMapper INSTANCE = Mappers.getMapper(EventMapper.class);
 
-//    @Mapping(source = "startTime", target = "startTime", dateFormat = "yyyy-MM-dd HH:mm:ssZ")
-//    @Mapping(source = "endTime", target = "endTime", dateFormat = "yyyy-MM-dd HH:mm:ssZ")
+    @Mapping(source = "startTime", target = "startTime", dateFormat = DATE_PATTERN)
+    @Mapping(source = "endTime", target = "endTime", dateFormat = DATE_PATTERN)
     Event rqCreateEventDtoToEvent(RqCreateEventDto rqCreateEventDto);
 
     @Mapping(source = "event.user.id", target = "userId")
     RsEventDto eventToRsEventDto(Event event);
 
+    @Mapping(source = "startTime", target = "startTime", dateFormat = DATE_PATTERN)
+    @Mapping(source = "endTime", target = "endTime", dateFormat = DATE_PATTERN)
     void updateEventFromRqUpdateEventDto(RqUpdateEventDto rqUpdateEventDto, @MappingTarget Event event);
 }

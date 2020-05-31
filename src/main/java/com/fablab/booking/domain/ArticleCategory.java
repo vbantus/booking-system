@@ -12,11 +12,10 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "rooms")
-public class Room extends AbstractEntity {
-    @Column(unique = true, nullable = false)
+@Table(name = "article_categories")
+public class ArticleCategory extends AbstractEntity {
+    @Column(length = 50, unique = true, nullable = false)
     private String name;
-    private int pricePerHour;
+    @Column(length = 300, nullable = false)
     private String description;
-    private String imagePath;
 }

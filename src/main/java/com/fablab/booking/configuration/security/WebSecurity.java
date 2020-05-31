@@ -47,7 +47,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/booking/events/count",
                         "/booking/events/upcoming",
                         "/booking/events/past").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll() //authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
