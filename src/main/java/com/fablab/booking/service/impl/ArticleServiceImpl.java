@@ -92,6 +92,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Long countArticlesByCategoryName(String categoryName) {
+        return articleRepository.countAllByCategoryName(categoryName);
+    }
+
+    @Override
     public Long count() {
         return articleRepository.count();
     }

@@ -25,6 +25,8 @@ public interface ArticleService {
 
     List<RsArticleDto> getAllByCategoryName(String categoryName, Pageable pageable);
 
+    Long countArticlesByCategoryName(String categoryName);
+
     Long count();
 
     Article findById(Long id);
