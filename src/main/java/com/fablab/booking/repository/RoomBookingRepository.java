@@ -40,4 +40,9 @@ public interface RoomBookingRepository extends JpaRepository<RoomBooking, Long> 
     Long countAllBookingsInGivenPeriodByRoomId(@Param("startBookingTime") Date startBookingTime,
                                                @Param("endBookingTime") Date endBookingTime,
                                                @Param("roomId") Long roomId);
+
+    //List<RoomBooking> findAllByCreateDateBetween(Date fromDate, Date toDate);
+
+    List<RoomBooking> findAllByCreateDateGreaterThanEqual(Date date);
+
 }

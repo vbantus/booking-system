@@ -5,6 +5,7 @@ import com.fablab.booking.dto.RqRegisterUserDto;
 import com.fablab.booking.dto.RqUpdateUserDto;
 import com.fablab.booking.dto.RsUserDto;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UserService {
@@ -20,4 +21,6 @@ public interface UserService {
     RsUserDto findByUsername(String username);
 
     BookingUser findById(Long id);
+
+    List<BookingUser> findAllByCreateDateGreaterThan(Date date);
 }
