@@ -15,6 +15,7 @@ import com.fablab.booking.service.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,9 +109,19 @@ public class RoomBookingServiceImpl implements RoomBookingService {
     }
 
     @Override
+    public Long count() {
+        return roomBookingRepository.count();
+    }
+
+    @Override
     public RoomBooking findById(Long id) {
         return roomBookingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("hall booking not found by id: " + id));
+    }
+
+    @Override
+    public List<RoomBooking> findAllByCreateDateGreaterThanEqual(Date date) {
+        return roomBookingRepository.findAllByCreateDateGreaterThanEqual(date);
     }
 
     private void checkRoomAvailability(RoomBooking roomBooking, Long roomId) {

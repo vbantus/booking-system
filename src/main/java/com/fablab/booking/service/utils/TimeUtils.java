@@ -2,6 +2,8 @@ package com.fablab.booking.service.utils;
 
 import com.fablab.booking.exception.TimeConflictException;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class TimeUtils {
@@ -13,5 +15,13 @@ public class TimeUtils {
         if (startTime.after(endTime)) {
             throw new TimeConflictException("startTime: [" + startTime + "] has to be before endTime: [" + endTime + "]");
         }
+    }
+
+    public static LocalDate dateToLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public static Date localDateToDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }

@@ -4,6 +4,7 @@ import com.fablab.booking.domain.RoomBooking;
 import com.fablab.booking.dto.RqRoomBookingDto;
 import com.fablab.booking.dto.RsRoomBookingDto;
 
+import java.util.Date;
 import java.util.List;
 
 public interface RoomBookingService {
@@ -28,5 +29,9 @@ public interface RoomBookingService {
 
     List<RsRoomBookingDto> getAllExpiredBookingsByUserId(Long userId);
 
+    Long count();
+
     RoomBooking findById(Long id);
+
+    List<RoomBooking> findAllByCreateDateGreaterThanEqual(Date date);
 }

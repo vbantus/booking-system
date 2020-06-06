@@ -2,10 +2,10 @@ package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.BookingUser;
 import com.fablab.booking.domain.common.UserRole;
-import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqRegisterUserDto;
 import com.fablab.booking.dto.RqUpdateUserDto;
 import com.fablab.booking.dto.RsUserDto;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.mapper.UserMapper;
 import com.fablab.booking.repository.UserRepository;
 import com.fablab.booking.service.UserService;
@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,4 +67,8 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("user not found by id: " + id));
     }
 
+    @Override
+    public List<BookingUser> findAllByCreateDateGreaterThan(Date date) {
+        return userRepository.findAllByCreateDateGreaterThan(date);
+    }
 }
