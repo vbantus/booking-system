@@ -6,7 +6,14 @@ import com.fablab.booking.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -25,10 +32,11 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.CREATED).body(roomService.save(rqRoomDto, image));
     }
 
-    @PutMapping("/{roomId}")
-    public ResponseEntity<RsRoomDto> update(@Valid @RequestBody RqRoomDto rqRoomDto,
+    @PatchMapping("/{roomId}")
+    public ResponseEntity<RsRoomDto> update(@Valid RqRoomDto rqRoomDto,
+                                            @RequestParam(value = "image", required = false) MultipartFile image,
                                             @PathVariable("roomId") Long roomId) {
-        return ResponseEntity.ok(roomService.update(rqRoomDto, roomId));
+        return ResponseEntity.ok(roomService.update(rqRoomDto, image, roomId));
     }
 
     @DeleteMapping("/{roomId}")

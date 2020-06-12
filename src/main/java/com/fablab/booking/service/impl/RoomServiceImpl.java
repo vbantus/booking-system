@@ -1,9 +1,9 @@
 package com.fablab.booking.service.impl;
 
 import com.fablab.booking.domain.Room;
-import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.dto.RqRoomDto;
 import com.fablab.booking.dto.RsRoomDto;
+import com.fablab.booking.exception.EntityNotFoundException;
 import com.fablab.booking.mapper.RoomMapper;
 import com.fablab.booking.repository.RoomRepository;
 import com.fablab.booking.service.MinioService;
@@ -36,9 +36,14 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RsRoomDto update(RqRoomDto rqRoomDto, Long id) {
+    public RsRoomDto update(RqRoomDto rqRoomDto, MultipartFile image, Long id) {
         Room room = findById(id);
         RoomMapper.INSTANCE.updateBookingSpaceFromRqBookingSpaceDto(rqRoomDto, room);
+
+        if (image != null) {
+            String imageUrl = minioService.saveImage(image, roomBucket);
+            room.setImageUrl(imageUrl);
+        }
         return RoomMapper.INSTANCE.roomToRsRoomDto(roomRepository.save(room));
     }
 

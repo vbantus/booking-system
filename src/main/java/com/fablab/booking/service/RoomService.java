@@ -11,7 +11,7 @@ public interface RoomService {
 
     RsRoomDto save(RqRoomDto rqRoomDto, MultipartFile image);
 
-    RsRoomDto update(RqRoomDto rqRoomDto, Long id);
+    RsRoomDto update(RqRoomDto rqRoomDto, MultipartFile image, Long id);
 
     void deleteById(Long id);
 
