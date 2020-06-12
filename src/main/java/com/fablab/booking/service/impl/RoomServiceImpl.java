@@ -6,9 +6,12 @@ import com.fablab.booking.dto.RqRoomDto;
 import com.fablab.booking.dto.RsRoomDto;
 import com.fablab.booking.mapper.RoomMapper;
 import com.fablab.booking.repository.RoomRepository;
+import com.fablab.booking.service.MinioService;
 import com.fablab.booking.service.RoomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,11 +20,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
+    @Value("${minio.buckek.room.name}")
+    private String roomBucket;
+
     private final RoomRepository roomRepository;
+    private final MinioService minioService;
 
     @Override
-    public RsRoomDto save(RqRoomDto rqRoomDto) {
+    public RsRoomDto save(RqRoomDto rqRoomDto, MultipartFile image) {
+        String imageUrl = minioService.saveImage(image, roomBucket);
+
         Room room = RoomMapper.INSTANCE.rqCreateBookingSpaceDtoToBookingSpace(rqRoomDto);
+        room.setImageUrl(imageUrl);
         return RoomMapper.INSTANCE.roomToRsRoomDto(roomRepository.save(room));
     }
 

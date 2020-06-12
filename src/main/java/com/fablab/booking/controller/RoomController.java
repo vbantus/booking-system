@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,8 +20,9 @@ public class RoomController {
     private final RoomService roomService;
 
     @PostMapping
-    public ResponseEntity<RsRoomDto> save(@Valid @RequestBody RqRoomDto rqRoomDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(roomService.save(rqRoomDto));
+    public ResponseEntity<RsRoomDto> save(@Valid RqRoomDto rqRoomDto,
+                                          @RequestParam(value = "image", required = false) MultipartFile image) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(roomService.save(rqRoomDto, image));
     }
 
     @PutMapping("/{roomId}")

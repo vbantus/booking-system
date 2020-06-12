@@ -18,5 +18,5 @@ public class Room extends AbstractEntity {
     private String name;
     private int pricePerHour;
     private String description;
-    private String imagePath;
+    private String imageUrl;
 }

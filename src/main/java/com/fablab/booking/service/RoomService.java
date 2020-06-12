@@ -3,12 +3,13 @@ package com.fablab.booking.service;
 import com.fablab.booking.domain.Room;
 import com.fablab.booking.dto.RqRoomDto;
 import com.fablab.booking.dto.RsRoomDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface RoomService {
 
-    RsRoomDto save(RqRoomDto rqRoomDto);
+    RsRoomDto save(RqRoomDto rqRoomDto, MultipartFile image);
 
     RsRoomDto update(RqRoomDto rqRoomDto, Long id);
 
