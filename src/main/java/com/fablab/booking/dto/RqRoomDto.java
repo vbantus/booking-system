@@ -14,5 +14,4 @@ public class RqRoomDto {
     private int pricePerHour;
     @ApiModelProperty(value = "description", example = "room 1 description")
     private String description;
-    private String imagePath;
 }

@@ -7,5 +7,5 @@ public class RsRoomDto extends AbstractResponseEntityDto {
     private String name;
     private int pricePerHour;
     private String description;
-    private String imagePath;
+    private String imageUrl;
 }
