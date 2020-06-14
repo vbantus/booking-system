@@ -6,6 +6,7 @@ import com.fablab.booking.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class PaymentController {
     private final EventService eventService;
 
     @PostMapping
-    public ResponseEntity<RsPaymentDto> performPayment(@Valid RqPaymentDto rqPaymentDto) {
+    public ResponseEntity<RsPaymentDto> performPayment(@Valid @RequestBody RqPaymentDto rqPaymentDto) {
         RsPaymentDto rsPaymentDto = RsPaymentDto.builder()
                 .email("booking@gmail.com")
                 .orderId(new Random().nextLong())
