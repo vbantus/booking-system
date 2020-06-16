@@ -27,7 +27,7 @@ public class PaymentController {
     public ResponseEntity<RsPaymentDto> performPayment(@Valid @RequestBody RqPaymentDto rqPaymentDto) {
         RsPaymentDto rsPaymentDto = RsPaymentDto.builder()
                 .email("booking@gmail.com")
-                .orderId(new Random().nextLong())
+                .orderId(new Random().nextInt(25000))
                 .eventDetails(eventService.getById(rqPaymentDto.getPaymentDetails().getEventId()))
                 .build();
         return ResponseEntity.ok(rsPaymentDto);
