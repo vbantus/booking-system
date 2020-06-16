@@ -46,6 +46,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/booking/events",
                         "/booking/events/count",
                         "/booking/events/upcoming",
+                        "/booking/rooms-booking",
                         "/booking/events/past").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()

@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class RsPaymentDto {
     private String email;
-    private Long orderId;
+    private Integer orderId;
     private RsEventDto eventDetails;
 }
