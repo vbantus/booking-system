@@ -24,6 +24,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtAuthFilter jwtAuthFilter;
+    private final HttpAuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -46,10 +47,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/booking/events",
                         "/booking/events/count",
                         "/booking/events/upcoming",
-                        "/booking/rooms-booking",
-                        "/booking/events/past").permitAll()
+                        "/booking/events/past",
+                        "/booking/rooms").permitAll()
+                .antMatchers("/booking/metrics/dashboard/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     }
